@@ -531,17 +531,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const gain = ctx.createGain();
 
     osc.type = "square";
-    osc.frequency.value = 1800;
+    osc.frequency.value = 1100;
 
     gain.gain.setValueAtTime(0.0001, time);
-    gain.gain.exponentialRampToValueAtTime(0.15, time + 0.001);
-    gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.03);
+    gain.gain.exponentialRampToValueAtTime(0.25, time + 0.001);
+    gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.06);
 
     osc.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start(time);
-    osc.stop(time + 0.04);
+    osc.stop(time + 0.07);
   }
 
   function metroTick(){
@@ -570,7 +570,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if(metro.running) return;
     metro.running = true;
-    metro.nextTime = ctx.currentTime + 0.05;
+    metro.nextTime = ctx.currentTime + 0.02;
+    // immediate confirmation click
+    clickSound(ctx.currentTime + 0.01);
 
     // 25ms scheduler
     metro.interval = setInterval(metroTick, 25);
@@ -598,11 +600,42 @@ document.addEventListener("DOMContentLoaded", () => {
     const bpm = Number(val);
     metro.bpm = Math.max(40, Math.min(200, bpm));
     state.metroBpm = metro.bpm;
-    $("bpmVal").textContent = String(metro.bpm);
-    $("fsBpmVal").textContent = String(metro.bpm);
-    $("bpmRange").value = String(metro.bpm);
-    $("fsBpmRange").value = String(metro.bpm);
+    if(metro.running){
+      const ctx = getAudioCtx();
+      if(ctx) metro.nextTime = Math.max(ctx.currentTime + 0.01, metro.nextTime);
+    }
+    const bv = $("bpmVal"); if(bv) bv.textContent = String(metro.bpm);
+    const fbv = $("fsBpmVal"); if(fbv) fbv.textContent = String(metro.bpm);
+    const br = $("bpmRange"); if(br) br.value = String(metro.bpm);
+    const fbr = $("fsBpmRange"); if(fbr) fbr.value = String(metro.bpm);
     save(); // persist BPM
+  }
+
+
+  function bindMetronomeControls(){
+    const br = $("bpmRange");
+    const fbr = $("fsBpmRange");
+    const bt = $("metroToggle");
+    const fbt = $("fsMetroToggle");
+
+    if(br && !br._bound){
+      br.addEventListener("input", (e)=> setBpm(e.target.value));
+      br.addEventListener("change", (e)=> setBpm(e.target.value));
+      br._bound = true;
+    }
+    if(fbr && !fbr._bound){
+      fbr.addEventListener("input", (e)=> setBpm(e.target.value));
+      fbr.addEventListener("change", (e)=> setBpm(e.target.value));
+      fbr._bound = true;
+    }
+    if(bt && !bt._bound){
+      bt.addEventListener("click", toggleMetronome);
+      bt._bound = true;
+    }
+    if(fbt && !fbt._bound){
+      fbt.addEventListener("click", toggleMetronome);
+      fbt._bound = true;
+    }
   }
 
   function updateMetroButtons(){
@@ -889,7 +922,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }catch(e){}
   }
 
-  function openFullScreen(){ $("fsOverlay").style.display = "block"; updateTimerUI(); }
+  function openFullScreen(){ $("fsOverlay").style.display = "block"; bindMetronomeControls(); updateTimerUI(); }
   function closeFullScreen(){ $("fsOverlay").style.display = "none"; }
 
   /* Circles: only allow tapping the next available circle */
