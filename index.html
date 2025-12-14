@@ -246,26 +246,22 @@
       color:rgba(16,185,129,.95);
     }
     .circle.done::after{
-      animation:none;
       content:"★";
       position:absolute;
       inset:0;
       display:grid;
       place-items:center;
-      font-size:28px;
-      color:rgba(219,39,119,.95);
-      text-shadow: 0 6px 14px rgba(91,26,58,.18);
-      transform: rotate(-12deg) scale(1.02);
-      animation: stamp .18s ease-out;
+      font-size:34px;
+      color:rgba(252,211,77,.95); /* pastel yellow */
+      text-shadow: 0 6px 16px rgba(120,53,15,.25);
       pointer-events:none;
     }
     
     .circle.stamped::after{
-      animation: stamp .18s ease-out;
+      /* animation removed */ stamp .18s ease-out;
     }
 
-    @keyframes stamp{
-      0%{ transform: rotate(-12deg) scale(.65); opacity:.2; }
+    
       100%{ transform: rotate(-12deg) scale(1.02); opacity:1; }
     }
 
@@ -319,7 +315,7 @@
       width:10px; height:16px;
       border-radius:4px;
       opacity:.95;
-      animation: fall 1.6s linear forwards;
+      /* animation removed */ fall 1.6s linear forwards;
     }
     @keyframes fall{
       0% { transform: translateY(-40px) rotate(0deg); opacity:1; }
