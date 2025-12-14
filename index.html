@@ -321,7 +321,36 @@
       0% { transform: translateY(-40px) rotate(0deg); opacity:1; }
       100% { transform: translateY(calc(100vh + 60px)) rotate(720deg); opacity:.98; }
     }
-  </style>
+  
+    input[type="range"]{
+      -webkit-appearance:none;
+      appearance:none;
+      height:10px;
+      border-radius:999px;
+      background:rgba(219,39,119,.16);
+      border:1px solid rgba(190,24,93,.12);
+      outline:none;
+    }
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      appearance:none;
+      width:26px; height:26px;
+      border-radius:999px;
+      background:rgba(252,211,77,.95);
+      border:2px solid rgba(219,39,119,.30);
+      box-shadow: 0 6px 16px rgba(91,26,58,.14);
+      cursor:pointer;
+    }
+    input[type="range"]::-moz-range-thumb{
+      width:26px; height:26px;
+      border-radius:999px;
+      background:rgba(252,211,77,.95);
+      border:2px solid rgba(219,39,119,.30);
+      box-shadow: 0 6px 16px rgba(91,26,58,.14);
+      cursor:pointer;
+    }
+
+</style>
 </head>
 <body>
   <header>
@@ -390,6 +419,15 @@
         <div class="smallnote" style="margin-top:10px;">Practices</div>
         <div class="circleRow" id="circleRowSmall"></div>
 
+        <div class="smallnote" style="margin-top:10px;">Metronome</div>
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div style="flex:1; min-width:220px;">
+            <input id="bpmRange" type="range" min="40" max="200" value="90" step="1" />
+            <div class="smallnote" style="margin-top:6px;">Tempo: <b><span id="bpmVal">90</span> BPM</b></div>
+          </div>
+          <button class="btn mini primary" id="metroToggle">Start</button>
+        </div>
+
         <div class="row" style="justify-content:center; margin-top:10px;">
           <button class="btn good" id="startBtn">Start</button>
           <button class="btn" id="pauseBtn">Pause</button>
@@ -417,6 +455,16 @@
       <div>
         <div class="smallnote" style="text-align:center; font-weight:800;">Tap one circle after each practice 🎀</div>
         <div class="circleRow" id="circleRowBig"></div>
+      </div>
+
+      
+      <div class="card" style="background:rgba(255,255,255,.52); border:1px solid rgba(190,24,93,.12); border-radius:20px; padding:12px;">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div style="font-weight:900; color:#7a1d45;">Metronome</div>
+          <button class="btn mini primary" id="fsMetroToggle">Start</button>
+        </div>
+        <input id="fsBpmRange" type="range" min="40" max="200" value="90" step="1" style="width:100%; margin-top:10px;" />
+        <div class="smallnote" style="margin-top:6px; text-align:center;">Tempo: <b><span id="fsBpmVal">90</span> BPM</b></div>
       </div>
 
       <div class="fsButtons">
@@ -450,10 +498,120 @@ document.addEventListener("DOMContentLoaded", () => {
     doneMinutes: 0,
     lastDate: TODAY_KEY(),
     timer: { itemId:null, remainingSec:0, totalSec:0, running:false, interval:null },
-    reps: {} // itemId -> boolean[] (done circles)
+    reps: {}, // itemId -> boolean[] (done circles)
+    metroBpm: 90
   };
 
   const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16);
+
+
+  // ---------------- Metronome ----------------
+  let metro = {
+    bpm: 90,
+    running: false,
+    nextTime: 0,
+    interval: null,
+    ctx: null
+  };
+
+  function getAudioCtx(){
+    if(metro.ctx) return metro.ctx;
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if(!Ctx) return null;
+    metro.ctx = new Ctx();
+    return metro.ctx;
+  }
+
+  function clickSound(time){
+    const ctx = getAudioCtx();
+    if(!ctx) return;
+
+    // Short, crisp click: oscillator -> gain envelope
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "square";
+    osc.frequency.value = 1800;
+
+    gain.gain.setValueAtTime(0.0001, time);
+    gain.gain.exponentialRampToValueAtTime(0.15, time + 0.001);
+    gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.03);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(time);
+    osc.stop(time + 0.04);
+  }
+
+  function metroTick(){
+    if(!metro.running) return;
+    const ctx = getAudioCtx();
+    if(!ctx) return;
+
+    // schedule clicks slightly ahead for stable timing
+    const lookahead = 0.12; // seconds
+    const interval = 60 / Math.max(40, Math.min(200, metro.bpm));
+
+    while(metro.nextTime < ctx.currentTime + lookahead){
+      clickSound(metro.nextTime);
+      metro.nextTime += interval;
+    }
+  }
+
+  function startMetronome(){
+    const ctx = getAudioCtx();
+    if(!ctx){ showToast("Metronome not supported on this device"); return; }
+
+    // iOS: ensure audio context is running (requires user gesture)
+    if(ctx.state === "suspended"){
+      ctx.resume().catch(()=>{});
+    }
+
+    if(metro.running) return;
+    metro.running = true;
+    metro.nextTime = ctx.currentTime + 0.05;
+
+    // 25ms scheduler
+    metro.interval = setInterval(metroTick, 25);
+
+    updateMetroButtons();
+    showToast("Metronome on 🎶");
+  }
+
+  function stopMetronome(){
+    metro.running = false;
+    if(metro.interval){
+      clearInterval(metro.interval);
+      metro.interval = null;
+    }
+    updateMetroButtons();
+    showToast("Metronome off");
+  }
+
+  function toggleMetronome(){
+    if(metro.running) stopMetronome();
+    else startMetronome();
+  }
+
+  function setBpm(val){
+    const bpm = Number(val);
+    metro.bpm = Math.max(40, Math.min(200, bpm));
+    state.metroBpm = metro.bpm;
+    $("bpmVal").textContent = String(metro.bpm);
+    $("fsBpmVal").textContent = String(metro.bpm);
+    $("bpmRange").value = String(metro.bpm);
+    $("fsBpmRange").value = String(metro.bpm);
+    save(); // persist BPM
+  }
+
+  function updateMetroButtons(){
+    const label = metro.running ? "Stop" : "Start";
+    const fsLabel = metro.running ? "Stop" : "Start";
+    const a = $("metroToggle"); if(a) a.textContent = label;
+    const b = $("fsMetroToggle"); if(b) b.textContent = fsLabel;
+  }
+
 
   function showToast(msg){
     const t = $("toast");
@@ -488,6 +646,10 @@ document.addEventListener("DOMContentLoaded", () => {
     state.timer ||= { itemId:null, remainingSec:0, totalSec:0, running:false, interval:null };
     render();
   }
+
+    // restore metronome bpm
+    if(typeof state.metroBpm === "number") { metro.bpm = state.metroBpm; }
+    setBpm(metro.bpm);
 
   function plannedMinutes(){ return state.items.reduce((a,it)=>a + (Number(it.minutes)||0), 0); }
   function completedCount(){ return state.items.filter(it=>it.done).length; }
