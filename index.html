@@ -227,6 +227,7 @@
     }
     .circle{
       width:52px; height:52px;
+      position:relative;
       border-radius:999px;
       border:2px solid rgba(219,39,119,.28);
       background:rgba(255,255,255,.78);
@@ -244,6 +245,24 @@
       border-color:rgba(16,185,129,.40);
       color:rgba(16,185,129,.95);
     }
+    .circle.done::after{
+      content:"★";
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      font-size:28px;
+      color:rgba(219,39,119,.95);
+      text-shadow: 0 6px 14px rgba(91,26,58,.18);
+      transform: rotate(-12deg) scale(1.02);
+      animation: stamp .18s ease-out;
+      pointer-events:none;
+    }
+    @keyframes stamp{
+      0%{ transform: rotate(-12deg) scale(.65); opacity:.2; }
+      100%{ transform: rotate(-12deg) scale(1.02); opacity:1; }
+    }
+
     .circle.next{
       outline:4px solid rgba(244,114,182,.18);
       border-color:rgba(219,39,119,.40);
@@ -373,6 +392,7 @@
           <button class="btn good" id="startBtn">Start</button>
           <button class="btn" id="pauseBtn">Pause</button>
           <button class="btn warn" id="nextBtn">Next</button>
+<button class="btn bad" id="resetItemBtn">Reset Item</button>
         </div>
       </div>
     </aside>
@@ -401,6 +421,7 @@
         <button class="fsBtn good" id="fsStart">Start</button>
         <button class="fsBtn primary" id="fsPause">Pause</button>
         <button class="fsBtn warn" id="fsNext">Next</button>
+<button class="fsBtn bad" id="fsReset">Reset Item</button>
         <button class="fsBtn bad" id="fsTick">Tick Done ✅</button>
       </div>
 
@@ -968,6 +989,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $("resetTodayBtn").addEventListener("click", resetToday);
   $("wipeAllBtn").addEventListener("click", wipeAll);
+
+  
+  function resetCurrentItem(){
+    const it = currentItem();
+    if(!it){ showToast("Nothing to reset"); return; }
+    if(!confirm("Restart timer and practices for this item?")) return;
+
+    // reset timer
+    state.timer.remainingSec = state.timer.totalSec;
+    pauseTimer();
+
+    // reset practices
+    state.reps[it.id] = Array.from({length: Number(it.reps||1)}, ()=> false);
+
+    // untick item if needed
+    if(it.done){
+      it.done = false;
+      state.doneMinutes = Math.max(0, state.doneMinutes - Number(it.minutes||0));
+    }
+    save();
+    updateTimerUI();
+    render();
+    showToast("Item reset 💗");
+  }
+
+  document.getElementById("resetItemBtn")?.addEventListener("click", resetCurrentItem);
+  document.getElementById("fsReset")?.addEventListener("click", resetCurrentItem);
 
   load();
 });
