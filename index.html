@@ -246,6 +246,7 @@
       color:rgba(16,185,129,.95);
     }
     .circle.done::after{
+      animation:none;
       content:"★";
       position:absolute;
       inset:0;
@@ -258,6 +259,11 @@
       animation: stamp .18s ease-out;
       pointer-events:none;
     }
+    
+    .circle.stamped::after{
+      animation: stamp .18s ease-out;
+    }
+
     @keyframes stamp{
       0%{ transform: rotate(-12deg) scale(.65); opacity:.2; }
       100%{ transform: rotate(-12deg) scale(1.02); opacity:1; }
@@ -392,7 +398,7 @@
           <button class="btn good" id="startBtn">Start</button>
           <button class="btn" id="pauseBtn">Pause</button>
           <button class="btn warn" id="nextBtn">Next</button>
-<button class="btn bad" id="resetItemBtn">Reset Item</button>
+<button class="btn bad" id="resetItemBtn">Reset This Item</button>
         </div>
       </div>
     </aside>
@@ -421,7 +427,7 @@
         <button class="fsBtn good" id="fsStart">Start</button>
         <button class="fsBtn primary" id="fsPause">Pause</button>
         <button class="fsBtn warn" id="fsNext">Next</button>
-<button class="fsBtn bad" id="fsReset">Reset Item</button>
+<button class="fsBtn bad" id="fsReset">Reset This Item</button>
         <button class="fsBtn bad" id="fsTick">Tick Done ✅</button>
       </div>
 
@@ -760,6 +766,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if(i !== ni){ showToast("Do them in order 🙂"); return; }
 
         current[i] = true;
+        // add one-time stamp animation
+        const circles = document.querySelectorAll('.circle');
+        if(circles[i]){
+          circles[i].classList.add('stamped');
+          setTimeout(()=>circles[i].classList.remove('stamped'), 250);
+        }
         state.reps[it.id] = current;
 
         // Celebration when all circles complete
