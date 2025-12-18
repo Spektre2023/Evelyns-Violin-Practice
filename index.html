@@ -7,26 +7,22 @@
   <style>
     :root{
       --bg1:#fff1f6;
-      --bg2:#fde2f3;
-      --bg3:#fbcfe8;
-      --card:rgba(255,255,255,.70);
-      --line:rgba(190, 24, 93, .14);
-      --text:#5b1a3a;
-      --muted:#8a3b63;
-      --accent:#db2777;
-      --accent2:#f472b6;
-      --good:#10b981;
-      --shadow: 0 10px 30px rgba(91, 26, 58,.18);
-      --radius:18px;
+      --bg2:#ffe4f1;
+      --card: rgba(255,255,255,.72);
+      --text:#3b2230;
+      --muted:#7a1d45;
+      --line: rgba(190,24,93,.14);
+      --shadow: 0 10px 30px rgba(91,26,58,.12);
+      --radius:16px;
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
     *{box-sizing:border-box}
     body{
       margin:0; font-family:var(--font); color:var(--text);
       background:
-        radial-gradient(1200px 700px at 20% 15%, rgba(244,114,182,.35), transparent 55%),
-        radial-gradient(900px 700px at 85% 25%, rgba(251,207,232,.55), transparent 55%),
-        radial-gradient(900px 700px at 35% 95%, rgba(219,39,119,.12), transparent 60%),
+        radial-gradient(1200px 700px at 20% 10%, rgba(244,114,182,.25), transparent 55%),
+        radial-gradient(900px 700px at 85% 25%, rgba(251,207,232,.60), transparent 55%),
+        radial-gradient(900px 700px at 30% 90%, rgba(251,191,36,.12), transparent 60%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
     }
     header{
@@ -34,138 +30,110 @@
       display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; align-items:flex-end;
     }
     h1{margin:0; font-size:22px}
-    .sub{margin:6px 0 0; color:var(--muted); font-size:13px}
+    .sub{margin:6px 0 0; color:rgba(122,29,69,.85); font-size:13px}
     main{max-width:980px; margin:14px auto 30px; padding:0 16px; display:grid; gap:14px}
     .grid{display:grid; grid-template-columns:1.15fr .85fr; gap:14px}
     @media (max-width: 860px){ .grid{grid-template-columns:1fr} }
 
     .card{
-      background:linear-gradient(180deg, var(--card), rgba(255,255,255,.55));
+      background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       padding:14px;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
     }
     .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    label{font-size:12px; color:var(--muted)}
+    label{font-size:12px; color:rgba(122,29,69,.85)}
     input, button{font-family:var(--font)}
     input{
-      width:100%; padding:10px 12px; border-radius:14px;
-      background:rgba(255,255,255,.75);
-      border:1px solid rgba(190, 24, 93, .16);
+      width:100%; padding:10px 12px; border-radius:12px;
+      background:rgba(255,255,255,.65); border:1px solid var(--line);
       color:var(--text); outline:none;
     }
-    input:focus{border-color:rgba(219,39,119,.55); box-shadow:0 0 0 4px rgba(244,114,182,.18)}
+    input:focus{border-color:rgba(244,114,182,.65); box-shadow:0 0 0 4px rgba(244,114,182,.16)}
     .btn{
-      border:1px solid rgba(190, 24, 93, .18);
-      background:rgba(255,255,255,.70);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.55);
       color:var(--text);
       padding:10px 12px;
-      border-radius:14px;
+      border-radius:12px;
       cursor:pointer;
       user-select:none;
-      transition:.12s transform ease, .12s background ease;
+      transition:.12s transform ease, .12s background ease, .12s border-color ease;
+      font-weight:800;
     }
-    .btn:hover{background:rgba(255,255,255,.85)}
+    .btn:hover{background:rgba(255,255,255,.75)}
     .btn:active{transform:translateY(1px)}
-    .btn.primary{
-      background:linear-gradient(180deg, rgba(244,114,182,.35), rgba(244,114,182,.20));
-      border-color:rgba(219,39,119,.28);
-      color:#641b3d;
-      font-weight:700;
-    }
-    .btn.good{
-      background:linear-gradient(180deg, rgba(16,185,129,.18), rgba(16,185,129,.10));
-      border-color:rgba(16,185,129,.25);
-      font-weight:700;
-    }
-    .btn.warn{
-      background:linear-gradient(180deg, rgba(251,191,36,.20), rgba(251,191,36,.10));
-      border-color:rgba(251,191,36,.28);
-      font-weight:700;
-    }
-    .btn.bad{
-      background:linear-gradient(180deg, rgba(244,63,94,.18), rgba(244,63,94,.10));
-      border-color:rgba(244,63,94,.28);
-      font-weight:700;
-    }
-    .btn.ghost{background:rgba(255,255,255,.55)}
+    .btn.primary{background:rgba(244,114,182,.22); border-color:rgba(219,39,119,.28)}
+    .btn.good{background:rgba(16,185,129,.14); border-color:rgba(16,185,129,.24)}
+    .btn.warn{background:rgba(251,191,36,.14); border-color:rgba(251,191,36,.30)}
+    .btn.bad{background:rgba(244,63,94,.10); border-color:rgba(244,63,94,.22)}
     .mini{padding:8px 10px; font-size:12px}
-    .field{flex:1; min-width:160px}
-    .mins{max-width:130px}
-    .reps{max-width:160px}
 
-    .pillrow{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end}
+    .pillrow{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; align-items:center}
     .pill{
-      border:1px solid rgba(190, 24, 93, .14);
-      background:rgba(255,255,255,.62);
-      padding:8px 10px; border-radius:999px; font-size:12px; color:var(--muted);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.55);
+      padding:8px 10px; border-radius:999px; font-size:12px; color:rgba(122,29,69,.95);
       display:flex; gap:8px; align-items:center;
+      font-weight:800;
     }
     .pill b{color:var(--text)}
 
+    .field{flex:1; min-width:160px}
+    .mins{max-width:140px}
+    .reps{max-width:160px}
+
     .list{margin-top:12px; display:grid; gap:10px}
     .item{
-      border:1px solid rgba(190, 24, 93, .14);
+      border:1px solid var(--line);
       background:rgba(255,255,255,.55);
-      border-radius:16px;
+      border-radius:14px;
       padding:12px;
       display:grid;
       grid-template-columns: 28px 1fr auto;
       gap:10px;
       align-items:center;
     }
-
     .check{
-      width:18px; height:18px; border-radius:7px;
-      border:1px solid rgba(219,39,119,.25);
+      width:18px; height:18px; border-radius:6px;
+      border:1px solid rgba(122,29,69,.25);
       background:rgba(255,255,255,.75);
       display:grid; place-items:center;
       cursor:pointer;
     }
-    .check[data-done="true"]{
-      background:rgba(16,185,129,.16);
-      border-color:rgba(16,185,129,.35);
-    }
+    .check[data-done="true"]{background:rgba(16,185,129,.18); border-color:rgba(16,185,129,.40)}
     .check svg{opacity:0}
     .check[data-done="true"] svg{opacity:1}
 
-    .name{font-weight:800}
-    .meta{color:var(--muted); font-size:12px; margin-top:4px}
+    .name{font-weight:900}
+    .meta{color:rgba(122,29,69,.85); font-size:12px; margin-top:4px; font-weight:700}
     .actions{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
     .drag{
       font-size:16px; line-height:1;
       padding:8px 10px;
-      border-radius:14px;
+      border-radius:12px;
       border:1px solid rgba(219,39,119,.20);
-      background:rgba(255,255,255,.55);
+      background:rgba(255,255,255,.65);
       color:rgba(91,26,58,.85);
       cursor:grab;
       user-select:none;
       touch-action:none;
+      font-weight:900;
     }
     .drag:active{cursor:grabbing}
     .item.dragging{opacity:.65; outline:2px dashed rgba(219,39,119,.35)}
     .item.dropTarget{outline:2px solid rgba(16,185,129,.22)}
 
     .bigTime{font-size:64px; font-weight:950; text-align:center; letter-spacing:1px; color:#7a1d45}
-    .progress{
-      border:1px solid rgba(190, 24, 93, .14);
-      border-radius:999px; height:12px;
-      background:rgba(255,255,255,.55);
-      overflow:hidden;
-    }
-    .bar{
-      height:100%;
-      width:0%;
-      background:linear-gradient(90deg, rgba(244,114,182,.95), rgba(219,39,119,.95));
-    }
-    .smallnote{font-size:12px; color:var(--muted); line-height:1.35}
+    .progress{border:1px solid rgba(190, 24, 93, .14); border-radius:999px; height:12px; background:rgba(255,255,255,.65); overflow:hidden}
+    .bar{height:100%; width:0%; background:linear-gradient(90deg, rgba(244,114,182,.95), rgba(219,39,119,.95))}
+    .smallnote{font-size:12px; color:rgba(122,29,69,.85); line-height:1.35; font-weight:700}
 
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
-      background:rgba(255,255,255,.86);
+      background:rgba(255,255,255,.90);
       border:1px solid rgba(190, 24, 93, .18);
       color:var(--text);
       padding:10px 12px;
@@ -174,14 +142,15 @@
       display:none;
       font-size:13px;
       z-index:1200;
+      font-weight:800;
     }
 
-    /* Full screen overlay */
+    /* Full screen overlay (Timer mode) */
     .fsOverlay{
       position:fixed; inset:0; z-index:999;
       display:none;
       background:
-        radial-gradient(1200px 700px at 20% 15%, rgba(244,114,182,.35), transparent 55%),
+        radial-gradient(1200px 700px at 20% 15%, rgba(244,114,182,.25), transparent 55%),
         radial-gradient(900px 700px at 85% 25%, rgba(251,207,232,.55), transparent 55%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
       padding:18px;
@@ -199,166 +168,157 @@
       font-size:34px; font-weight:950; text-align:center;
       padding:10px 14px; border-radius:20px;
       border:1px solid rgba(190, 24, 93, .14);
-      background:rgba(255,255,255,.62);
+      background:rgba(255,255,255,.70);
       color:#7a1d45;
     }
-    .fsTime{
-      font-size:min(18vw, 170px);
-      font-weight:1000;
-      text-align:center;
-      letter-spacing:2px;
-      line-height:1;
-      color:#7a1d45;
-      text-shadow: 0 6px 18px rgba(91,26,58,.10);
-    }
-
-    /* Practice circles */
-    .circleRow{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:12px;
-      padding:10px 6px;
-      border-radius:20px;
-      border:1px solid rgba(190, 24, 93, .12);
-      background:rgba(255,255,255,.52);
-      min-height:74px;
-      align-items:center;
-    }
-    .circle{
-      width:52px; height:52px;
-      position:relative;
-      border-radius:999px;
-      border:2px solid rgba(219,39,119,.28);
-      background:rgba(255,255,255,.78);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      user-select:none;
-      font-weight:900;
-      color:rgba(91,26,58,.55);
-      transition:.12s transform ease, .12s background ease, .12s border-color ease;
-    }
-    .circle:active{transform:scale(.98)}
-    .circle.done{
-      background:linear-gradient(180deg, rgba(16,185,129,.18), rgba(16,185,129,.10));
-      border-color:rgba(16,185,129,.40);
-      color:rgba(16,185,129,.95);
-    }
-    .circle.done::after{
-      content:"★";
-      position:absolute;
-      inset:0;
-      display:grid;
-      place-items:center;
-      font-size:34px;
-      color:rgba(252,211,77,.95); /* pastel yellow */
-      text-shadow: 0 6px 16px rgba(120,53,15,.25);
-      pointer-events:none;
-    }
-    
-    .circle.stamped::after{
-      /* animation removed */ stamp .18s ease-out;
-    }
-
-    
-      100%{ transform: rotate(-12deg) scale(1.02); opacity:1; }
-    }
-
-    .circle.next{
-      outline:4px solid rgba(244,114,182,.18);
-      border-color:rgba(219,39,119,.40);
-      color:#7a1d45;
-    }
-    .circle.locked{
-      opacity:.55;
-      cursor:not-allowed;
-    }
-
-    .fsButtons{
-      display:flex; justify-content:center; flex-wrap:wrap; gap:12px;
-    }
+    .fsTime{font-size:min(18vw, 170px); font-weight:950; text-align:center; letter-spacing:2px; line-height:1; color:#7a1d45}
+    .fsButtons{display:flex; justify-content:center; flex-wrap:wrap; gap:14px;}
     .fsBtn{
       font-size:22px; padding:16px 22px; border-radius:18px; min-width:160px;
-      border:1px solid rgba(190, 24, 93, .18);
-      background:rgba(255,255,255,.70);
-      color:var(--text);
-      cursor:pointer;
-      font-weight:800;
+      border:1px solid rgba(190,24,93,.18); background:rgba(255,255,255,.70); color:var(--text);
+      cursor:pointer; font-weight:950;
     }
-    .fsBtn.good{background:linear-gradient(180deg, rgba(16,185,129,.18), rgba(16,185,129,.10)); border-color:rgba(16,185,129,.30)}
-    .fsBtn.primary{background:linear-gradient(180deg, rgba(244,114,182,.35), rgba(244,114,182,.20)); border-color:rgba(219,39,119,.28)}
-    .fsBtn.warn{background:linear-gradient(180deg, rgba(251,191,36,.22), rgba(251,191,36,.10)); border-color:rgba(251,191,36,.28)}
-    .fsBtn.bad{background:linear-gradient(180deg, rgba(244,63,94,.18), rgba(244,63,94,.10)); border-color:rgba(244,63,94,.28)}
+    .fsBtn.good{background:rgba(16,185,129,.14); border-color:rgba(16,185,129,.28)}
+    .fsBtn.primary{background:rgba(244,114,182,.22); border-color:rgba(219,39,119,.28)}
+    .fsBtn.warn{background:rgba(251,191,36,.14); border-color:rgba(251,191,36,.30)}
+    .fsBtn.bad{background:rgba(244,63,94,.10); border-color:rgba(244,63,94,.22)}
 
-    /* Celebration (fireworks/confetti) */
-    .celebrate{
-      position:fixed; inset:0; z-index:1100;
-      display:none;
+    /* Practices circles */
+    .circleRow{
+      display:flex; flex-wrap:wrap; justify-content:center; gap:12px;
+      padding:10px 6px; border-radius:18px;
+      border:1px solid rgba(190,24,93,.14);
+      background:rgba(255,255,255,.60);
+      min-height:70px; align-items:center; margin-top:6px;
+    }
+    .circle{
+      width:52px; height:52px; border-radius:999px;
+      border:2px solid rgba(190,24,93,.18);
+      background:rgba(255,255,255,.72);
+      display:grid; place-items:center;
+      cursor:pointer; user-select:none;
+      font-weight:950; color:rgba(122,29,69,.75);
+      position:relative; transition:.12s transform ease, .12s background ease, .12s border-color ease;
+    }
+    .circle:active{transform:scale(.98)}
+    .circle.done{background:rgba(16,185,129,.12); border-color:rgba(16,185,129,.35); color:rgba(16,185,129,.95)}
+    .circle.done::after{
+      content:"★"; position:absolute; inset:0; display:grid; place-items:center;
+      font-size:34px; color:rgba(251,191,36,.95); text-shadow:0 6px 16px rgba(0,0,0,.12);
       pointer-events:none;
     }
+    .circle.next{outline:4px solid rgba(244,114,182,.18); border-color:rgba(219,39,119,.35); color:rgba(122,29,69,.95)}
+    .circle.locked{opacity:.55; cursor:not-allowed;}
+
+    /* Range slider */
+    input[type="range"]{-webkit-appearance:none; appearance:none; height:10px; border-radius:999px; background:rgba(244,114,182,.22); border:1px solid rgba(190,24,93,.14); outline:none; width:100%;}
+    input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none; appearance:none; width:26px; height:26px; border-radius:999px; background:rgba(251,191,36,.95); border:2px solid rgba(244,114,182,.22); box-shadow:0 6px 16px rgba(0,0,0,.10); cursor:pointer;}
+    input[type="range"]::-moz-range-thumb{width:26px; height:26px; border-radius:999px; background:rgba(251,191,36,.95); border:2px solid rgba(244,114,182,.22); box-shadow:0 6px 16px rgba(0,0,0,.10); cursor:pointer;}
+
+    /* Celebration */
+    .celebrate{position:fixed; inset:0; z-index:1100; display:none; pointer-events:none;}
     .celebrate .msg{
-      position:absolute; left:50%; top:12%;
-      transform:translateX(-50%);
-      background:rgba(255,255,255,.82);
-      border:1px solid rgba(190, 24, 93, .16);
-      padding:14px 18px;
-      border-radius:999px;
+      position:absolute; left:50%; top:12%; transform:translateX(-50%);
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(190,24,93,.18);
+      padding:14px 18px; border-radius:999px;
       box-shadow:var(--shadow);
-      font-weight:950;
-      color:#7a1d45;
-      font-size:22px;
+      font-weight:950; color:var(--text); font-size:22px;
+    }
+    .confetti{position:absolute; width:10px; height:16px; border-radius:4px; opacity:.95; animation: fall 1.6s linear forwards;}
+    @keyframes fall{0%{transform: translateY(-40px) rotate(0deg); opacity:1;}100%{transform: translateY(calc(100vh + 60px)) rotate(720deg); opacity:.98;}}
+
+    /* Dollhouse overlay (mirrors Lincoln's Vault overlay structure) */
+    #dollOverlay .fsWrap{
+      position:relative;
+      background-image: url('assets/dollhouse.webp');
+      background-size: cover;
+      background-position: center;
+      border-radius: 18px;
+      border:1px solid rgba(190,24,93,.18);
+      overflow:hidden;
+    }
+    #dollOverlay .fsWrap::before{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.10));
       pointer-events:none;
     }
-    .confetti{
-      position:absolute;
-      width:10px; height:16px;
-      border-radius:4px;
-      opacity:.95;
-      /* animation removed */ fall 1.6s linear forwards;
+    #dollOverlay .fsTop, #dollOverlay .card, #dollOverlay .row, #dollOverlay .smallnote, #dollOverlay h3 {
+      position:relative; z-index:2;
     }
-    @keyframes fall{
-      0% { transform: translateY(-40px) rotate(0deg); opacity:1; }
-      100% { transform: translateY(calc(100vh + 60px)) rotate(720deg); opacity:.98; }
-    }
-  
-    input[type="range"]{
-      -webkit-appearance:none;
-      appearance:none;
-      height:10px;
-      border-radius:999px;
-      background:rgba(219,39,119,.16);
-      border:1px solid rgba(190,24,93,.12);
-      outline:none;
-    }
-    input[type="range"]::-webkit-slider-thumb{
-      -webkit-appearance:none;
-      appearance:none;
-      width:26px; height:26px;
-      border-radius:999px;
-      background:rgba(252,211,77,.95);
-      border:2px solid rgba(219,39,119,.30);
-      box-shadow: 0 6px 16px rgba(91,26,58,.14);
-      cursor:pointer;
-    }
-    input[type="range"]::-moz-range-thumb{
-      width:26px; height:26px;
-      border-radius:999px;
-      background:rgba(252,211,77,.95);
-      border:2px solid rgba(219,39,119,.30);
-      box-shadow: 0 6px 16px rgba(91,26,58,.14);
-      cursor:pointer;
-    }
+    .dollMain{display:grid; grid-template-columns: 1fr 320px; gap:12px; align-items:start; margin-top:10px;}
+    @media (max-width: 860px){ .dollMain{grid-template-columns:1fr} }
 
-</style>
+    .stage{
+      position:relative;
+      height: min(70vh, 760px);
+      border-radius:18px;
+      border:1px solid rgba(190,24,93,.18);
+      background: rgba(255,255,255,.20);
+      overflow:hidden;
+    }
+    .stageHint{
+      position:absolute; left:12px; bottom:12px;
+      background:rgba(255,255,255,.88);
+      border:1px solid rgba(190,24,93,.18);
+      padding:8px 10px; border-radius:999px;
+      font-size:12px; font-weight:900; color:#7a1d45;
+    }
+    .stickersLayer{position:absolute; inset:0;}
+    .sticker{
+      position:absolute;
+      width:90px; height:90px;
+      border-radius:16px;
+      cursor:grab;
+      user-select:none;
+      touch-action:none;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.18));
+    }
+    .sticker:active{cursor:grabbing}
+    .palette{display:grid; gap:10px}
+    .panelCard{background:rgba(255,255,255,.86); border:1px solid rgba(190,24,93,.18); border-radius:18px; padding:12px;}
+    .shopGrid{display:grid; grid-template-columns: repeat(2, 1fr); gap:10px;}
+    .shopItem{border:1px solid rgba(190,24,93,.16); background:rgba(255,255,255,.75); border-radius:16px; padding:10px; display:grid; gap:8px; justify-items:center; text-align:center;}
+    .shopItem img{width:86px; height:86px; object-fit:cover; border-radius:14px; border:1px solid rgba(190,24,93,.12)}
+    .ownedRow{display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-start;}
+    .ownedBtn{border:1px solid rgba(190,24,93,.16); background:rgba(255,255,255,.86); border-radius:16px; padding:6px; width:92px; cursor:pointer;}
+    .ownedBtn.sel{outline:4px solid rgba(244,114,182,.18); border-color:rgba(219,39,119,.25)}
+    .ownedBtn img{width:100%; height:78px; object-fit:cover; border-radius:12px;}
+    .tiny{font-size:12px; font-weight:900; color:#7a1d45}
+    .coinLine{text-align:center; font-size:18px; font-weight:950; color:#7a1d45}
+
+    /* Parent panel inside overlay (same idea as Lincoln) */
+    #adminPanel{
+      display:none;
+      margin-top:10px;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(190,24,93,.18);
+      background:rgba(255,255,255,.90);
+      max-height: calc(100vh - 120px);
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    #adminFooter{
+      position: sticky;
+      bottom: 0;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.90));
+      backdrop-filter: blur(6px);
+    }
+  </style>
 </head>
 <body>
   <header>
     <div>
       <h1>🎻 Evelyn’s Violin Practice</h1>
-      <div class="sub">Add items, set minutes + how many practices, then tick them off 💗</div>
+      <div style="font-weight:900; margin-top:6px;">🪙 Coins: <span id="coinDisplay">0</span></div>
+      <div class="sub">Add tasks, set minutes, start the timer, then tick them off ✅</div>
     </div>
     <div class="pillrow">
+      <button class="btn mini primary" id="openDollBtn">🏠 Dollhouse</button>
       <div class="pill">Planned: <b id="plannedMin">0</b> min</div>
       <div class="pill">Done: <b id="doneMin">0</b> min</div>
       <div class="pill">Completed: <b id="completedCount">0</b>/<span id="totalCount">0</span></div>
@@ -369,10 +329,8 @@
     <section class="card">
       <div class="row" style="justify-content:space-between; align-items:flex-end;">
         <div>
-          <div style="font-weight:900;">Practice List</div>
-          <div class="smallnote">
-            Reorder items by dragging <b>≡</b> or using ↑ ↓. “Next” follows this order.
-          </div>
+          <div style="font-weight:950;">Practice List</div>
+          <div class="smallnote">Reorder items by dragging <b>≡</b> or using ↑ ↓. “Next” follows this order.</div>
         </div>
         <div class="row">
           <button class="btn warn mini" id="resetTodayBtn">Reset Today</button>
@@ -404,13 +362,13 @@
     <aside class="card">
       <div class="row" style="justify-content:space-between; align-items:center;">
         <div>
-          <div style="font-weight:900;">Timer</div>
+          <div style="font-weight:950;">Timer</div>
           <div class="smallnote">Pick an item → Start. Full Screen is big and easy.</div>
         </div>
         <button class="btn primary" id="fullBtn">Full Screen</button>
       </div>
 
-      <div class="card" style="background:rgba(255,255,255,.55); box-shadow:none; margin-top:10px; border:1px solid rgba(190,24,93,.12);">
+      <div class="card" style="background:rgba(255,255,255,.80); box-shadow:none; margin-top:10px; border:1px solid rgba(190,24,93,.12);">
         <div class="smallnote">Current item</div>
         <div id="currentName" style="font-weight:950; font-size:16px; margin-top:6px; color:#7a1d45;">(none selected)</div>
         <div class="bigTime" id="timeLeft">00:00</div>
@@ -432,7 +390,7 @@
           <button class="btn good" id="startBtn">Start</button>
           <button class="btn" id="pauseBtn">Pause</button>
           <button class="btn warn" id="nextBtn">Next</button>
-<button class="btn bad" id="resetItemBtn">Reset This Item</button>
+          <button class="btn bad" id="resetItemBtn">Reset This Item</button>
         </div>
       </div>
     </aside>
@@ -441,7 +399,7 @@
   <div class="fsOverlay" id="fsOverlay">
     <div class="fsWrap">
       <div class="fsTop">
-        <div style="font-weight:950;">🎻 Violin Practice Mode</div>
+        <div style="font-weight:950;">🎻 Violin Timer Mode</div>
         <button class="btn" id="fsExitBtn">Exit</button>
       </div>
 
@@ -452,15 +410,9 @@
         <div class="progress" style="height:18px;"><div class="bar" id="fsBar"></div></div>
       </div>
 
-      <div>
-        <div class="smallnote" style="text-align:center; font-weight:800;">Tap one circle after each practice 🎀</div>
-        <div class="circleRow" id="circleRowBig"></div>
-      </div>
-
-      
-      <div class="card" style="background:rgba(255,255,255,.52); border:1px solid rgba(190,24,93,.12); border-radius:20px; padding:12px;">
+      <div class="card" style="background:rgba(255,255,255,.82); border:1px solid rgba(190,24,93,.12); border-radius:18px; padding:12px;">
         <div class="row" style="justify-content:space-between; align-items:center;">
-          <div style="font-weight:900; color:#7a1d45;">Metronome</div>
+          <div style="font-weight:950;">Metronome</div>
           <button class="btn mini primary" id="fsMetroToggle">Start</button>
         </div>
         <input id="fsBpmRange" type="range" min="40" max="200" value="90" step="1" style="width:100%; margin-top:10px;" />
@@ -471,13 +423,74 @@
         <button class="fsBtn good" id="fsStart">Start</button>
         <button class="fsBtn primary" id="fsPause">Pause</button>
         <button class="fsBtn warn" id="fsNext">Next</button>
-<button class="fsBtn bad" id="fsReset">Reset This Item</button>
+        <button class="fsBtn bad" id="fsReset">Reset This Item</button>
         <button class="fsBtn bad" id="fsTick">Tick Done ✅</button>
       </div>
 
       <div class="smallnote" style="text-align:center;">
         Tip: Add to Home Screen for a “real app” feel.
       </div>
+    </div>
+  </div>
+
+  <div class="fsOverlay" id="dollOverlay">
+    <div class="fsWrap">
+      <div class="fsTop">
+        <div style="font-weight:950;">🏠 Hello Kitty Dollhouse</div>
+        <div class="row" style="gap:10px;">
+          <button class="btn mini" id="parentBtn">🔒 Parent</button>
+          <button class="btn" id="closeDollBtn">Back</button>
+        </div>
+      </div>
+
+      <div class="coinLine">Coins: 🪙 <span id="dollCoins">0</span></div>
+
+      <div id="adminPanel">
+        <div style="font-weight:950; margin-bottom:8px;">Parent Mode</div>
+
+        <div class="row" style="gap:10px; flex-wrap:wrap; justify-content:space-between;">
+          <div style="flex:1; min-width:220px;">
+            <div class="smallnote">Set Coins</div>
+            <input id="adminCoins" type="number" min="0" step="10" style="width:100%; padding:10px 12px; border-radius:12px; border:1px solid rgba(190,24,93,.18); background:rgba(255,255,255,.90);">
+          </div>
+          <div style="flex:1; min-width:220px;">
+            <div class="smallnote">Parent PIN (4+ digits)</div>
+            <input id="adminPin" type="password" inputmode="numeric" placeholder="Set / Change PIN" style="width:100%; padding:10px 12px; border-radius:12px; border:1px solid rgba(190,24,93,.18); background:rgba(255,255,255,.90);">
+          </div>
+        </div>
+
+        <div class="row" style="gap:10px; margin-top:10px;">
+          <button class="btn mini primary" id="saveCoinsBtn">Save Coins</button>
+          <button class="btn mini" id="savePinBtn">Save PIN</button>
+          <button class="btn mini warn" id="unlockAllBtn">Unlock All Friends</button>
+          <button class="btn mini bad" id="clearHouseBtn">Clear Dollhouse</button>
+        </div>
+
+        <div id="adminFooter" class="row" style="justify-content:flex-end;">
+          <button class="btn mini" id="closeParentBtn">Close Parent Mode</button>
+        </div>
+      </div>
+
+      <div class="dollMain">
+        <div class="stage" id="stage">
+          <div class="stickersLayer" id="stickersLayer"></div>
+          <div class="stageHint">Tap a friend → tap in the house to place. Drag to move. Double‑click to remove.</div>
+        </div>
+
+        <div class="palette">
+          <div class="panelCard">
+            <div style="font-weight:950; margin-bottom:8px;">Owned Friends</div>
+            <div class="smallnote" style="margin-bottom:10px;">Select one, then tap the house.</div>
+            <div class="ownedRow" id="ownedRow"></div>
+          </div>
+
+          <div class="panelCard">
+            <div style="font-weight:950; margin-bottom:8px;">Shop (everything is purchasable)</div>
+            <div class="shopGrid" id="shopGrid"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -490,8 +503,10 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const $ = (id) => document.getElementById(id);
-  const KEY = "evelyn_violin_practice_v1";
+  const KEY = "evelyn_violin_practice_v9";
   const TODAY_KEY = () => new Date().toISOString().slice(0,10);
+
+  const CATALOG = [{"id": "hello_kitty", "name": "Hello Kitty", "cost": 300, "img": "assets/hello_kitty.webp"}, {"id": "my_melody", "name": "My Melody", "cost": 280, "img": "assets/my_melody.webp"}, {"id": "kuromi", "name": "Kuromi", "cost": 320, "img": "assets/kuromi.webp"}, {"id": "cinnamoroll", "name": "Cinnamoroll", "cost": 310, "img": "assets/cinnamoroll.webp"}, {"id": "pompompurin", "name": "Pompompurin", "cost": 260, "img": "assets/pompompurin.webp"}, {"id": "keroppi", "name": "Keroppi", "cost": 240, "img": "assets/keroppi.webp"}, {"id": "pochacco", "name": "Pochacco", "cost": 250, "img": "assets/pochacco.webp"}, {"id": "bubbles", "name": "Bubble Friend", "cost": 200, "img": "assets/bathtub_friend.webp"}];
 
   let state = {
     items: [],
@@ -499,442 +514,86 @@ document.addEventListener("DOMContentLoaded", () => {
     lastDate: TODAY_KEY(),
     timer: { itemId:null, remainingSec:0, totalSec:0, running:false, interval:null },
     reps: {}, // itemId -> boolean[] (done circles)
-    metroBpm: 90
+    metroBpm: 90,
+    coins: 0,
+    owned: {}, // id -> true
+    placed: [], // {id, x, y, w}
+    parent: { pinHash: "", unlocked:false }
   };
 
   const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16);
 
-
-  // ---------------- Metronome ----------------
-  let metro = {
-    bpm: 90,
-    running: false,
-    nextTime: 0,
-    interval: null,
-    ctx: null
-  };
-
-  function getAudioCtx(){
-    if(metro.ctx) return metro.ctx;
-    const Ctx = window.AudioContext || window.webkitAudioContext;
-    if(!Ctx) return null;
-    metro.ctx = new Ctx();
-    return metro.ctx;
+  // --- persistence ---
+  function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if(raw) state = Object.assign(state, JSON.parse(raw));
+    } catch(e) {}
   }
 
-  function clickSound(time){
-    const ctx = getAudioCtx();
-    if(!ctx) return;
-
-    // Short, crisp click: oscillator -> gain envelope
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = "square";
-    osc.frequency.value = 1100;
-
-    gain.gain.setValueAtTime(0.0001, time);
-    gain.gain.exponentialRampToValueAtTime(0.25, time + 0.001);
-    gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.06);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start(time);
-    osc.stop(time + 0.07);
-  }
-
-  function metroTick(){
-    if(!metro.running) return;
-    const ctx = getAudioCtx();
-    if(!ctx) return;
-
-    // schedule clicks slightly ahead for stable timing
-    const lookahead = 0.12; // seconds
-    const interval = 60 / Math.max(40, Math.min(200, metro.bpm));
-
-    while(metro.nextTime < ctx.currentTime + lookahead){
-      clickSound(metro.nextTime);
-      metro.nextTime += interval;
-    }
-  }
-
-  function startMetronome(){
-    const ctx = getAudioCtx();
-    if(!ctx){ showToast("Metronome not supported on this device"); return; }
-
-    // iOS: ensure audio context is running (requires user gesture)
-    if(ctx.state === "suspended"){
-      ctx.resume().catch(()=>{});
-    }
-
-    if(metro.running) return;
-    metro.running = true;
-    metro.nextTime = ctx.currentTime + 0.02;
-    // immediate confirmation click
-    clickSound(ctx.currentTime + 0.01);
-
-    // 25ms scheduler
-    metro.interval = setInterval(metroTick, 25);
-
-    updateMetroButtons();
-    showToast("Metronome on 🎶");
-  }
-
-  function stopMetronome(){
-    metro.running = false;
-    if(metro.interval){
-      clearInterval(metro.interval);
-      metro.interval = null;
-    }
-    updateMetroButtons();
-    showToast("Metronome off");
-  }
-
-  function toggleMetronome(){
-    if(metro.running) stopMetronome();
-    else startMetronome();
-  }
-
-  function setBpm(val){
-    const bpm = Number(val);
-    metro.bpm = Math.max(40, Math.min(200, bpm));
-    state.metroBpm = metro.bpm;
-    if(metro.running){
-      const ctx = getAudioCtx();
-      if(ctx) metro.nextTime = Math.max(ctx.currentTime + 0.01, metro.nextTime);
-    }
-    const bv = $("bpmVal"); if(bv) bv.textContent = String(metro.bpm);
-    const fbv = $("fsBpmVal"); if(fbv) fbv.textContent = String(metro.bpm);
-    const br = $("bpmRange"); if(br) br.value = String(metro.bpm);
-    const fbr = $("fsBpmRange"); if(fbr) fbr.value = String(metro.bpm);
-    save(); // persist BPM
-  }
-
-
-  function bindMetronomeControls(){
-    const br = $("bpmRange");
-    const fbr = $("fsBpmRange");
-    const bt = $("metroToggle");
-    const fbt = $("fsMetroToggle");
-
-    if(br && !br._bound){
-      br.addEventListener("input", (e)=> setBpm(e.target.value));
-      br.addEventListener("change", (e)=> setBpm(e.target.value));
-      br._bound = true;
-    }
-    if(fbr && !fbr._bound){
-      fbr.addEventListener("input", (e)=> setBpm(e.target.value));
-      fbr.addEventListener("change", (e)=> setBpm(e.target.value));
-      fbr._bound = true;
-    }
-    if(bt && !bt._bound){
-      bt.addEventListener("click", toggleMetronome);
-      bt._bound = true;
-    }
-    if(fbt && !fbt._bound){
-      fbt.addEventListener("click", toggleMetronome);
-      fbt._bound = true;
-    }
-  }
-
-  function updateMetroButtons(){
-    const label = metro.running ? "Stop" : "Start";
-    const fsLabel = metro.running ? "Stop" : "Start";
-    const a = $("metroToggle"); if(a) a.textContent = label;
-    const b = $("fsMetroToggle"); if(b) b.textContent = fsLabel;
-  }
-
-
+  // --- small UI helpers ---
   function showToast(msg){
     const t = $("toast");
     t.textContent = msg;
     t.style.display = "block";
     clearTimeout(showToast._t);
-    showToast._t = setTimeout(()=> t.style.display="none", 1400);
+    showToast._t = setTimeout(()=>t.style.display="none", 1700);
   }
+  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
 
-  function save(){
-    try{
-      localStorage.setItem(KEY, JSON.stringify({...state, timer:{...state.timer, interval:null}}));
-    }catch(e){}
-  }
-
-  function load(){
-    try{
-      const raw = localStorage.getItem(KEY);
-      if(raw) state = JSON.parse(raw);
-    }catch(e){}
+  // --- daily reset ---
+  function ensureToday(){
     const today = TODAY_KEY();
     if(state.lastDate !== today){
       state.lastDate = today;
-      state.doneMinutes = 0;
-      state.items = (state.items || []).map(it => ({...it, done:false}));
-      state.reps = {}; // new day = new circles
-      stopTimer(true);
-      save();
-    }
-    state.items ||= [];
-    state.reps ||= {};
-    state.timer ||= { itemId:null, remainingSec:0, totalSec:0, running:false, interval:null };
-    render();
-  }
-
-    // restore metronome bpm
-    if(typeof state.metroBpm === "number") { metro.bpm = state.metroBpm; }
-    setBpm(metro.bpm);
-
-  function plannedMinutes(){ return state.items.reduce((a,it)=>a + (Number(it.minutes)||0), 0); }
-  function completedCount(){ return state.items.filter(it=>it.done).length; }
-  function currentItem(){ return state.items.find(i=>i.id === state.timer.itemId) || null; }
-
-  function ensureRepsState(item){
-    if(!item) return;
-    const n = Math.max(1, Math.min(30, Number(item.reps||1)));
-    const arr = state.reps[item.id];
-    if(!Array.isArray(arr) || arr.length !== n){
-      // preserve previous progress if possible
-      const nextArr = Array.from({length:n}, (_,i)=> Boolean(arr && arr[i]));
-      state.reps[item.id] = nextArr;
+      // reset item done flags + reps each day
+      state.items.forEach(it => it.done = false);
+      state.reps = {};
       save();
     }
   }
 
-  function repsArray(item){
-    if(!item) return [];
-    ensureRepsState(item);
-    return state.reps[item.id] || [];
+  // --- practice items ---
+  function plannedMinutes(){
+    return state.items.reduce((s,it)=>s + Number(it.minutes||0), 0);
+  }
+  function completedCount(){
+    return state.items.filter(it=>it.done).length;
+  }
+  function currentItem(){
+    return state.items.find(x=>x.id === state.timer.itemId) || null;
   }
 
-  function repsDoneCount(item){
-    return repsArray(item).filter(Boolean).length;
+  // --- rewards multiplier (same concept as Lincoln rebalanced) ---
+  function minutesMultiplier(mins){
+    const m = Number(mins||0);
+    if(m <= 0) return 1;
+    // 5min=1x, 10=2x, 15=3x ... cap 6x
+    return clamp(Math.round(m/5), 1, 6);
   }
+  function rewardCircle(mins){ return 5 * minutesMultiplier(mins); }
+  function rewardComplete(mins){ return 10 * minutesMultiplier(mins); }
 
-  function repsComplete(item){
-    const a = repsArray(item);
-    return a.length > 0 && a.every(Boolean);
-  }
-
-  function formatTime(sec){
-    sec = Math.max(0, Math.floor(sec));
-    const m = Math.floor(sec/60);
-    const s = sec%60;
-    return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
-  }
-
-  function updateTimerUI(){
-    const it = currentItem();
-    $("currentName").textContent = it ? it.name : "(none selected)";
-    $("timeLeft").textContent = formatTime(state.timer.remainingSec);
-    const total = Math.max(1, state.timer.totalSec);
-    const pct = 100 * (1 - (state.timer.remainingSec / total));
-    $("bar").style.width = Math.min(100, Math.max(0, pct)) + "%";
-
-    $("fsTask").textContent = it ? it.name : "(none selected)";
-    $("fsTime").textContent = formatTime(state.timer.remainingSec);
-    $("fsBar").style.width = Math.min(100, Math.max(0, pct)) + "%";
-
-    renderCircles();
-  }
-
-  function pauseTimer(){
-    state.timer.running = false;
-    if(state.timer.interval){
-      clearInterval(state.timer.interval);
-      state.timer.interval = null;
-    }
-  }
-
-  function stopTimer(clear=false){
-    pauseTimer();
-    if(clear){
-      state.timer.itemId = null;
-      state.timer.remainingSec = 0;
-      state.timer.totalSec = 0;
-    }
-    updateTimerUI();
-  }
-
-  function tick(){
-    if(!state.timer.running) return;
-    state.timer.remainingSec -= 1;
-    if(state.timer.remainingSec <= 0){
-      state.timer.remainingSec = 0;
-      pauseTimer();
-      updateTimerUI();
-      showToast("Time’s up! Keep going if needed 💗");
-      beep();
-      save();
-      return;
-    }
-    updateTimerUI();
-    save();
-  }
-
-  function startTimer(){
-    if(!state.timer.itemId){ showToast("Pick an item first 🙂"); return; }
-    if(state.timer.remainingSec <= 0){ showToast("At 0:00. Press Next or pick again."); return; }
-    if(state.timer.running) return;
-    state.timer.running = true;
-    state.timer.interval = setInterval(tick, 1000);
-    save();
-  }
-
-  function setCurrent(item){
-    if(!item){
-      stopTimer(true);
-      save();
-      render();
-      return;
-    }
-    stopTimer(false);
-    state.timer.itemId = item.id;
-    state.timer.totalSec = Number(item.minutes||0) * 60;
-    state.timer.remainingSec = state.timer.totalSec;
-    ensureRepsState(item);
-    updateTimerUI();
-    save();
-  }
-
-  function nextItem(){
-    pauseTimer();
-    const idx = state.items.findIndex(i=>i.id === state.timer.itemId);
-    const next = state.items.slice(idx+1).find(i=>!i.done) || state.items.find(i=>!i.done) || null;
-    setCurrent(next);
-    render();
-  }
-
-  function addItem(){
-    const name = $("newName").value.trim();
-    const minutes = Number($("newMinutes").value);
-    const reps = Number($("newReps").value);
-    if(!name){ showToast("Type a practice item."); return; }
-    if(!minutes || minutes < 1){ showToast("Set minutes (1–90)."); return; }
-    if(!reps || reps < 1 || reps > 30){ showToast("Set practices (1–30)."); return; }
-
-    const id = uid();
-    state.items.push({ id, name, minutes, reps, done:false });
-    state.reps[id] = Array.from({length:reps}, ()=> false);
-
-    $("newName").value = ""; $("newMinutes").value = ""; $("newReps").value = "";
-    save(); render();
-    showToast("Added 💗");
-  }
-
-  function toggleDone(id){
-    const it = state.items.find(x=>x.id===id);
+  // --- circles ---
+  function ensureRepsState(it){
     if(!it) return;
-    const wasDone = it.done;
-    it.done = !it.done;
-
-    if(!wasDone && it.done){ state.doneMinutes += Number(it.minutes||0); }
-    else if(wasDone && !it.done){ state.doneMinutes = Math.max(0, state.doneMinutes - Number(it.minutes||0)); }
-
-    save(); render();
-  }
-
-  function editItem(id){
-    const it = state.items.find(x=>x.id===id);
-    if(!it) return;
-
-    const newName = prompt("Edit practice item:", it.name);
-    if(newName === null) return;
-    const nm = newName.trim();
-    if(!nm){ showToast("Name not changed."); return; }
-
-    const newMins = prompt("Edit minutes (1–90):", String(it.minutes));
-    if(newMins === null) return;
-    const m = Number(newMins);
-    if(!m || m < 1 || m > 90){ showToast("Minutes not changed."); return; }
-
-    const newReps = prompt("Edit practices (1–30):", String(it.reps || 1));
-    if(newReps === null) return;
-    const r = Number(newReps);
-    if(!r || r < 1 || r > 30){ showToast("Practices not changed."); return; }
-
-    if(it.done){
-      state.doneMinutes = Math.max(0, state.doneMinutes - Number(it.minutes||0));
-      state.doneMinutes += m;
+    const reps = clamp(Number(it.reps||10), 1, 30);
+    if(!Array.isArray(state.reps[it.id]) || state.reps[it.id].length !== reps){
+      state.reps[it.id] = new Array(reps).fill(false);
     }
-
-    it.name = nm;
-    it.minutes = m;
-    it.reps = r;
-
-    // Resize reps state, preserving done progress
-    const prev = state.reps[it.id] || [];
-    state.reps[it.id] = Array.from({length:r}, (_,i)=> Boolean(prev[i]));
-
-    if(state.timer.itemId === it.id) setCurrent(it);
-    save(); render();
-    showToast("Updated 🎀");
   }
-
-  function deleteItem(id){
-    const idx = state.items.findIndex(x=>x.id===id);
-    if(idx < 0) return;
-    const it = state.items[idx];
-    if(!confirm(`Delete "${it.name}"?`)) return;
-
-    if(it.done) state.doneMinutes = Math.max(0, state.doneMinutes - Number(it.minutes||0));
-    state.items.splice(idx, 1);
-    delete state.reps[id];
-
-    if(state.timer.itemId === id) stopTimer(true);
-    save(); render();
-    showToast("Deleted 🗑️");
+  function repsArray(it){
+    ensureRepsState(it);
+    return state.reps[it.id];
   }
-
-  function moveItem(from, to){
-    if(from === to) return;
-    if(from < 0 || to < 0 || from >= state.items.length || to >= state.items.length) return;
-    const [it] = state.items.splice(from, 1);
-    state.items.splice(to, 0, it);
-    save(); render();
-  }
-
-  function resetToday(){
-    if(!confirm("Reset today? (Keeps list, clears ticks & circles)")) return;
-    state.doneMinutes = 0;
-    state.items = state.items.map(it => ({...it, done:false}));
-    state.reps = {};
-    stopTimer(true);
-    save(); render();
-    showToast("Reset ✅");
-  }
-
-  function wipeAll(){
-    if(!confirm("Wipe everything? This cannot be undone.")) return;
-    localStorage.removeItem(KEY);
-    location.reload();
-  }
-
-  function beep(){
-    try{
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.type = "sine"; o.frequency.value = 880;
-      g.gain.value = 0.05;
-      o.connect(g); g.connect(ctx.destination);
-      o.start();
-      setTimeout(()=>{ o.stop(); ctx.close(); }, 180);
-    }catch(e){}
-  }
-
-  function openFullScreen(){ $("fsOverlay").style.display = "block"; bindMetronomeControls(); updateTimerUI(); }
-  function closeFullScreen(){ $("fsOverlay").style.display = "none"; }
-
-  /* Circles: only allow tapping the next available circle */
   function renderCircles(){
     const it = currentItem();
     const small = $("circleRowSmall");
-    const big = $("circleRowBig");
+    if(!small) return;
     small.innerHTML = "";
-    big.innerHTML = "";
     if(!it){
       small.innerHTML = `<div class="smallnote">Pick an item to see practices 💗</div>`;
-      big.innerHTML = `<div class="smallnote">Pick an item to see practices 💗</div>`;
       return;
     }
     ensureRepsState(it);
@@ -948,101 +607,226 @@ document.addEventListener("DOMContentLoaded", () => {
       if(a[i]) c.classList.add("done");
       if(i === nextIndex) c.classList.add("next");
       if(!a[i] && i !== nextIndex) c.classList.add("locked");
-
       c.addEventListener("click", () => {
-        // allow unticking only the last completed? keep simple: only allow completing next
         const current = repsArray(it);
         const ni = current.findIndex(x=>!x);
-        if(ni === -1){ return; }
+        if(ni === -1) return;
         if(i !== ni){ showToast("Do them in order 🙂"); return; }
-
         current[i] = true;
-        // add one-time stamp animation
-        const circles = document.querySelectorAll('.circle');
-        if(circles[i]){
-          circles[i].classList.add('stamped');
-          setTimeout(()=>circles[i].classList.remove('stamped'), 250);
-        }
         state.reps[it.id] = current;
 
-        // Celebration when all circles complete
+        // reward for circle
+        state.coins += rewardCircle(it.minutes);
         if(current.every(Boolean)){
           celebrate();
-          // auto-tick item done (without requiring timer to finish)
           if(!it.done){
             it.done = true;
             state.doneMinutes += Number(it.minutes||0);
+            state.coins += rewardComplete(it.minutes);
           }
         }
         save();
-        render(); // refresh list + pills
+        render();
       });
       return c;
     };
 
-    a.forEach((_,i)=>{
-      small.appendChild(makeCircle(i));
-      big.appendChild(makeCircle(i));
-    });
-
-    // If all done, show gentle hint
-    if(a.length && a.every(Boolean)){
-      const hint = document.createElement("div");
-      hint.className = "smallnote";
-      hint.style.textAlign = "center";
-      hint.style.width = "100%";
-      hint.style.fontWeight = "800";
-      hint.textContent = "All practices complete! 🎉";
-      big.appendChild(hint);
-    }
+    a.forEach((_,i)=> small.appendChild(makeCircle(i)));
   }
 
   function celebrate(){
     const layer = $("celebrate");
     layer.style.display = "block";
-
-    // Create confetti pieces
-    const colors = [
-      "rgba(244,114,182,.95)",
-      "rgba(219,39,119,.95)",
-      "rgba(251,207,232,.95)",
-      "rgba(16,185,129,.85)",
-      "rgba(251,191,36,.90)"
-    ];
-
-    const pieces = 120;
+    const colors = ["rgba(244,114,182,.95)","rgba(219,39,119,.95)","rgba(251,207,232,.95)","rgba(16,185,129,.85)","rgba(251,191,36,.90)"];
+    const pieces = 110;
     for(let i=0;i<pieces;i++){
       const p = document.createElement("div");
       p.className = "confetti";
-      const left = Math.random()*100;
-      p.style.left = left + "vw";
+      p.style.left = (Math.random()*100) + "vw";
       p.style.top = (-20 - Math.random()*40) + "px";
       p.style.background = colors[Math.floor(Math.random()*colors.length)];
-      p.style.transform = `translateY(-40px) rotate(${Math.random()*180}deg)`;
       p.style.animationDuration = (1.2 + Math.random()*1.2) + "s";
       p.style.width = (8 + Math.random()*8) + "px";
       p.style.height = (10 + Math.random()*14) + "px";
       layer.appendChild(p);
       setTimeout(()=> p.remove(), 2600);
     }
-
-    // Auto-hide after a moment
     clearTimeout(celebrate._t);
     celebrate._t = setTimeout(()=>{
-      // remove remaining confetti nodes
       layer.querySelectorAll(".confetti").forEach(n=>n.remove());
       layer.style.display = "none";
     }, 2400);
   }
 
-  // Drag reorder support
+  // --- metronome ---
+  let metro = { bpm: 90, running:false, nextTime:0, interval:null, ctx:null };
+  function getAudioCtx(){
+    if(metro.ctx) return metro.ctx;
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if(!Ctx) return null;
+    metro.ctx = new Ctx();
+    return metro.ctx;
+  }
+  function clickSound(time){
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type="square"; osc.frequency.value=1100;
+    gain.gain.setValueAtTime(0.0001, time);
+    gain.gain.exponentialRampToValueAtTime(0.22, time+0.001);
+    gain.gain.exponentialRampToValueAtTime(0.0001, time+0.06);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(time); osc.stop(time+0.07);
+  }
+  function metroTick(){
+    if(!metro.running) return;
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const lookahead = 0.12;
+    const interval = 60 / clamp(metro.bpm,40,200);
+    while(metro.nextTime < ctx.currentTime + lookahead){
+      clickSound(metro.nextTime);
+      metro.nextTime += interval;
+    }
+  }
+  function startMetronome(){
+    const ctx = getAudioCtx();
+    if(!ctx){ showToast("Metronome not supported"); return; }
+    if(ctx.state === "suspended"){ ctx.resume().catch(()=>{}); }
+    metro.running = true;
+    metro.nextTime = ctx.currentTime + 0.05;
+    clearInterval(metro.interval);
+    metro.interval = setInterval(metroTick, 25);
+    updateMetroButtons();
+  }
+  function stopMetronome(){
+    metro.running = false;
+    clearInterval(metro.interval);
+    updateMetroButtons();
+  }
+  function toggleMetronome(){
+    metro.running ? stopMetronome() : startMetronome();
+  }
+  function updateMetroButtons(){
+    $("metroToggle").textContent = metro.running ? "Stop" : "Start";
+    $("fsMetroToggle").textContent = metro.running ? "Stop" : "Start";
+  }
+  function bindMetronomeControls(){
+    const bpm = clamp(Number(state.metroBpm||90),40,200);
+    metro.bpm = bpm;
+    $("bpmRange").value = bpm; $("bpmVal").textContent = bpm;
+    $("fsBpmRange").value = bpm; $("fsBpmVal").textContent = bpm;
+  }
+
+  // --- timer ---
+  function updateTimerUI(){
+    const it = currentItem();
+    const remaining = state.timer.remainingSec || 0;
+    const total = state.timer.totalSec || 0;
+    const mm = String(Math.floor(remaining/60)).padStart(2,"0");
+    const ss = String(remaining%60).padStart(2,"0");
+    $("timeLeft").textContent = `${mm}:${ss}`;
+    $("fsTime").textContent = `${mm}:${ss}`;
+    $("currentName").textContent = it ? it.name : "(none selected)";
+    $("fsTask").textContent = it ? it.name : "(none selected)";
+    const pct = total>0 ? (100*(1 - remaining/total)) : 0;
+    $("bar").style.width = pct + "%";
+    $("fsBar").style.width = pct + "%";
+    renderCircles();
+    updateCoinDisplays();
+  }
+  function tick(){
+    if(!state.timer.running) return;
+    state.timer.remainingSec = Math.max(0, (state.timer.remainingSec||0) - 1);
+    if(state.timer.remainingSec <= 0){
+      state.timer.running = false;
+      clearInterval(state.timer.interval);
+      state.timer.interval = null;
+      // auto mark done + rewards
+      const it = currentItem();
+      if(it && !it.done){
+        it.done = true;
+        state.doneMinutes += Number(it.minutes||0);
+        state.coins += rewardComplete(it.minutes);
+        celebrate();
+      }
+      showToast("Finished! ✅");
+      save();
+      render();
+    } else {
+      updateTimerUI();
+    }
+  }
+  function startTimer(){
+    const it = currentItem();
+    if(!it){ showToast("Pick an item first"); return; }
+    if(state.timer.running) return;
+    if(!state.timer.remainingSec || state.timer.remainingSec<=0){
+      state.timer.totalSec = Number(it.minutes||0)*60;
+      state.timer.remainingSec = state.timer.totalSec;
+    }
+    state.timer.running = true;
+    clearInterval(state.timer.interval);
+    state.timer.interval = setInterval(tick, 1000);
+    updateTimerUI();
+  }
+  function pauseTimer(){
+    state.timer.running = false;
+    clearInterval(state.timer.interval);
+    state.timer.interval = null;
+    updateTimerUI();
+  }
+  function resetThisItem(){
+    const it = currentItem();
+    if(!it) return;
+    state.timer.running = false;
+    clearInterval(state.timer.interval);
+    state.timer.interval = null;
+    state.timer.totalSec = Number(it.minutes||0)*60;
+    state.timer.remainingSec = state.timer.totalSec;
+    // reset circles for this item today
+    ensureRepsState(it);
+    state.reps[it.id] = state.reps[it.id].map(()=>false);
+    it.done = false;
+    save();
+    render();
+    showToast("Reset ✅");
+  }
+  function nextItem(){
+    if(state.items.length === 0) return;
+    const cur = state.timer.itemId;
+    const idx = state.items.findIndex(x=>x.id===cur);
+    const next = state.items[(idx+1+state.items.length)%state.items.length];
+    state.timer.itemId = next.id;
+    state.timer.running = false;
+    clearInterval(state.timer.interval);
+    state.timer.interval = null;
+    state.timer.totalSec = Number(next.minutes||0)*60;
+    state.timer.remainingSec = state.timer.totalSec;
+    save();
+    render();
+  }
+  function tickDone(){
+    const it = currentItem();
+    if(!it) return;
+    if(!it.done){
+      it.done = true;
+      state.doneMinutes += Number(it.minutes||0);
+      state.coins += rewardComplete(it.minutes);
+      celebrate();
+    }
+    pauseTimer();
+    save();
+    render();
+  }
+
+  function openFullScreen(){ $("fsOverlay").style.display="block"; bindMetronomeControls(); updateTimerUI(); }
+  function closeFullScreen(){ $("fsOverlay").style.display="none"; }
+
+  // --- reorder drag ---
   let dragIndex = null;
   function onDragStart(e, index){
     dragIndex = index;
-    if(e.dataTransfer){
-      e.dataTransfer.setData("text/plain", String(index));
-      e.dataTransfer.effectAllowed = "move";
-    }
+    if(e.dataTransfer){ e.dataTransfer.setData("text/plain", String(index)); e.dataTransfer.effectAllowed="move"; }
     e.currentTarget.closest(".item")?.classList.add("dragging");
   }
   function onDragEnd(e){
@@ -1050,177 +834,436 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".item.dropTarget").forEach(x=>x.classList.remove("dropTarget"));
     dragIndex = null;
   }
-  function onDragOver(e){
-    e.preventDefault();
-    if(e.dataTransfer) e.dataTransfer.dropEffect = "move";
-    e.currentTarget.classList.add("dropTarget");
-  }
-  function onDragLeave(e){
-    e.currentTarget.classList.remove("dropTarget");
-  }
+  function onDragOver(e){ e.preventDefault(); e.currentTarget.classList.add("dropTarget"); }
   function onDrop(e, dropIndex){
     e.preventDefault();
-    const from = dragIndex !== null ? dragIndex : Number(e.dataTransfer?.getData("text/plain"));
-    if(Number.isFinite(from)) moveItem(from, dropIndex);
-    document.querySelectorAll(".item.dropTarget").forEach(x=>x.classList.remove("dropTarget"));
+    const from = dragIndex ?? Number(e.dataTransfer?.getData("text/plain"));
+    if(Number.isNaN(from) || from===null || from===undefined) return;
+    if(from === dropIndex) return;
+    const a = state.items;
+    const [moved] = a.splice(from,1);
+    a.splice(dropIndex,0,moved);
+    state.items = a;
+    save(); render();
   }
 
-  function render(){
-    $("plannedMin").textContent = plannedMinutes();
-    $("doneMin").textContent = state.doneMinutes;
-    $("completedCount").textContent = completedCount();
-    $("totalCount").textContent = state.items.length;
-
+  // --- render list ---
+  function renderList(){
     const list = $("list");
     list.innerHTML = "";
-
-    if(state.items.length === 0){
-      const empty = document.createElement("div");
-      empty.className = "smallnote";
-      empty.textContent = "No items yet. Add a practice item above 🙂";
-      list.appendChild(empty);
-      setCurrent(null);
-      return;
-    }
-
-    state.items.forEach((it, index) => {
-      const el = document.createElement("div");
-      el.className = "item";
-      el.addEventListener("dragover", onDragOver);
-      el.addEventListener("dragleave", onDragLeave);
-      el.addEventListener("drop", (e)=>onDrop(e, index));
+    state.items.forEach((it, idx)=>{
+      const row = document.createElement("div");
+      row.className = "item";
+      row.draggable = true;
+      row.addEventListener("dragstart",(e)=>onDragStart(e, idx));
+      row.addEventListener("dragend",(e)=>onDragEnd(e));
+      row.addEventListener("dragover",(e)=>onDragOver(e));
+      row.addEventListener("dragleave",(e)=>e.currentTarget.classList.remove("dropTarget"));
+      row.addEventListener("drop",(e)=>onDrop(e, idx));
 
       const check = document.createElement("div");
       check.className = "check";
       check.dataset.done = it.done ? "true" : "false";
-      check.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-        <path d="M20 6L9 17l-5-5" stroke="rgba(91,26,58,.85)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
-      check.onclick = () => toggleDone(it.id);
+      check.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="rgba(16,185,129,.95)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      check.addEventListener("click", ()=>{
+        it.done = !it.done;
+        if(it.done) {
+          state.doneMinutes += Number(it.minutes||0);
+          state.coins += rewardComplete(it.minutes);
+          celebrate();
+        } else {
+          state.doneMinutes = Math.max(0, state.doneMinutes - Number(it.minutes||0));
+        }
+        save(); render();
+      });
 
       const mid = document.createElement("div");
-      const nm = document.createElement("div");
-      nm.className = "name";
-      nm.textContent = it.name;
-      const meta = document.createElement("div");
-      meta.className = "meta";
-      meta.textContent = `${it.minutes} min • ${it.reps || 1} practices • done ${repsDoneCount(it)}/${Math.max(1, Number(it.reps||1))}`;
-      mid.appendChild(nm);
-      mid.appendChild(meta);
+      mid.innerHTML = `<div class="name">${it.name}</div>
+        <div class="meta">${it.minutes} min • ${it.reps||10} practices • Rewards: +${rewardCircle(it.minutes)} per ★, +${rewardComplete(it.minutes)} on completion</div>`;
 
       const actions = document.createElement("div");
       actions.className = "actions";
-
-      const pick = document.createElement("button");
-      pick.className = "btn mini primary";
-      pick.textContent = "Pick";
-      pick.onclick = () => setCurrent(it);
-
-      const edit = document.createElement("button");
-      edit.className = "btn mini";
-      edit.textContent = "Edit";
-      edit.onclick = () => editItem(it.id);
-
-      const del = document.createElement("button");
-      del.className = "btn mini bad";
-      del.textContent = "Delete";
-      del.onclick = () => deleteItem(it.id);
-
-      const up = document.createElement("button");
-      up.className = "btn mini ghost";
-      up.textContent = "↑";
-      up.title = "Move up";
-      up.onclick = () => moveItem(index, Math.max(0, index-1));
-
-      const down = document.createElement("button");
-      down.className = "btn mini ghost";
-      down.textContent = "↓";
-      down.title = "Move down";
-      down.onclick = () => moveItem(index, Math.min(state.items.length-1, index+1));
-
       const drag = document.createElement("div");
       drag.className = "drag";
       drag.textContent = "≡";
-      drag.title = "Drag to reorder";
-      drag.setAttribute("draggable", "true");
-      drag.addEventListener("dragstart", (e)=>onDragStart(e, index));
-      drag.addEventListener("dragend", onDragEnd);
+      const up = document.createElement("button"); up.className="btn mini"; up.textContent="↑";
+      const down = document.createElement("button"); down.className="btn mini"; down.textContent="↓";
+      const pick = document.createElement("button"); pick.className="btn mini primary"; pick.textContent="Select";
+      const del = document.createElement("button"); del.className="btn mini bad"; del.textContent="Delete";
 
-      actions.appendChild(pick);
-      actions.appendChild(edit);
-      actions.appendChild(del);
-      actions.appendChild(up);
-      actions.appendChild(down);
-      actions.appendChild(drag);
+      pick.addEventListener("click", ()=>{
+        state.timer.itemId = it.id;
+        state.timer.running = false;
+        clearInterval(state.timer.interval);
+        state.timer.interval = null;
+        state.timer.totalSec = Number(it.minutes||0)*60;
+        state.timer.remainingSec = state.timer.totalSec;
+        save(); render();
+      });
+      del.addEventListener("click", ()=>{
+        if(!confirm("Delete this item?")) return;
+        state.items = state.items.filter(x=>x.id!==it.id);
+        if(state.timer.itemId === it.id){
+          state.timer.itemId = state.items[0]?.id || null;
+          state.timer.running=false;
+          clearInterval(state.timer.interval);
+          state.timer.interval=null;
+          const ni = currentItem();
+          state.timer.totalSec = ni ? Number(ni.minutes||0)*60 : 0;
+          state.timer.remainingSec = state.timer.totalSec;
+        }
+        save(); render();
+      });
+      up.addEventListener("click", ()=>{
+        if(idx===0) return;
+        const a = state.items;
+        [a[idx-1], a[idx]] = [a[idx], a[idx-1]];
+        save(); render();
+      });
+      down.addEventListener("click", ()=>{
+        const a = state.items;
+        if(idx===a.length-1) return;
+        [a[idx+1], a[idx]] = [a[idx], a[idx+1]];
+        save(); render();
+      });
 
-      el.appendChild(check);
-      el.appendChild(mid);
-      el.appendChild(actions);
-      list.appendChild(el);
+      actions.append(drag, up, down, pick, del);
+
+      row.append(check, mid, actions);
+      row.addEventListener("click",(e)=>{
+        if(e.target.closest("button") || e.target.closest(".check")) return;
+        pick.click();
+      });
+
+      list.appendChild(row);
     });
-
-    updateTimerUI();
   }
 
-  // Bind
-  $("addBtn").addEventListener("click", addItem);
-  $("newName").addEventListener("keydown", (e)=>{ if(e.key==="Enter") addItem(); });
-  $("newMinutes").addEventListener("keydown", (e)=>{ if(e.key==="Enter") addItem(); });
-  $("newReps").addEventListener("keydown", (e)=>{ if(e.key==="Enter") addItem(); });
+  function updatePills(){
+    $("plannedMin").textContent = plannedMinutes();
+    $("doneMin").textContent = state.doneMinutes;
+    $("completedCount").textContent = completedCount();
+    $("totalCount").textContent = state.items.length;
+  }
 
-  $("startBtn").addEventListener("click", startTimer);
-  $("pauseBtn").addEventListener("click", () => { pauseTimer(); save(); updateTimerUI(); });
-  $("nextBtn").addEventListener("click", nextItem);
-  $("fullBtn").addEventListener("click", openFullScreen);
+  function updateCoinDisplays(){
+    $("coinDisplay").textContent = state.coins || 0;
+    $("dollCoins").textContent = state.coins || 0;
+  }
 
-  $("fsExitBtn").addEventListener("click", closeFullScreen);
-  $("fsStart").addEventListener("click", startTimer);
-  $("fsPause").addEventListener("click", () => { pauseTimer(); save(); updateTimerUI(); });
-  $("fsNext").addEventListener("click", nextItem);
-  $("fsTick").addEventListener("click", () => {
-    const it = currentItem();
-    if(!it){ showToast("Pick an item first 🙂"); return; }
-    if(!it.done){
-      it.done = true;
-      state.doneMinutes += Number(it.minutes||0);
-      save(); render();
-      showToast("Ticked ✅");
-    }else{
-      showToast("Already ticked ✅");
+  // --- dollhouse: shop + owned + placing ---
+  let selectedFriendId = null;
+
+  function renderShop(){
+    const grid = $("shopGrid");
+    grid.innerHTML = "";
+    CATALOG.forEach(item=>{
+      const card = document.createElement("div");
+      card.className = "shopItem";
+      const owned = !!state.owned[item.id];
+      card.innerHTML = `
+        <img src="${item.img}" alt="">
+        <div class="tiny">${item.name}</div>
+        <div class="smallnote">Cost: 🪙 <b>${item.cost}</b></div>
+        <button class="btn mini ${owned ? "" : "primary"}" data-buy="${item.id}">${owned ? "Owned ✅" : "Buy"}</button>
+      `;
+      const btn = card.querySelector("button");
+      btn.addEventListener("click", ()=>{
+        if(state.owned[item.id]){ showToast("Already owned ✅"); return; }
+        if((state.coins||0) < item.cost){ showToast("Not enough coins"); return; }
+        state.coins -= item.cost;
+        state.owned[item.id] = true;
+        save();
+        renderDollhouseUI();
+        showToast("Purchased! 🎀");
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  function renderOwned(){
+    const row = $("ownedRow");
+    row.innerHTML = "";
+    const ownedIds = Object.keys(state.owned||{}).filter(id=>state.owned[id]);
+    if(ownedIds.length===0){
+      row.innerHTML = `<div class="smallnote">No friends yet. Buy one from the shop 💗</div>`;
+      return;
     }
+    ownedIds.forEach(id=>{
+      const item = CATALOG.find(x=>x.id===id);
+      if(!item) return;
+      const b = document.createElement("div");
+      b.className = "ownedBtn" + (selectedFriendId===id ? " sel" : "");
+      b.innerHTML = `<img src="${item.img}" alt=""><div class="tiny" style="text-align:center; margin-top:6px;">${item.name}</div>`;
+      b.addEventListener("click", ()=>{
+        selectedFriendId = (selectedFriendId===id) ? null : id;
+        renderOwned();
+      });
+      row.appendChild(b);
+    });
+  }
+
+  function renderPlaced(){
+    const layer = $("stickersLayer");
+    layer.innerHTML = "";
+    (state.placed||[]).forEach((p, idx)=>{
+      const item = CATALOG.find(x=>x.id===p.id);
+      if(!item) return;
+      const img = document.createElement("img");
+      img.className = "sticker";
+      img.src = item.img;
+      img.style.left = (p.x*100) + "%";
+      img.style.top  = (p.y*100) + "%";
+      img.style.width = (p.w||90) + "px";
+      img.style.height = (p.w||90) + "px";
+      img.dataset.idx = String(idx);
+      makeDraggable(img);
+      img.addEventListener("dblclick", ()=>{
+        state.placed.splice(idx,1);
+        save(); renderPlaced();
+        showToast("Removed");
+      });
+      layer.appendChild(img);
+    });
+  }
+
+  function placeSelectedAt(stageX, stageY){
+    if(!selectedFriendId){ showToast("Select a friend first"); return; }
+    const stage = $("stage");
+    const rect = stage.getBoundingClientRect();
+    const x = clamp((stageX - rect.left)/rect.width, 0, 1);
+    const y = clamp((stageY - rect.top)/rect.height, 0, 1);
+    state.placed.push({ id:selectedFriendId, x, y, w: 90 });
+    save(); renderPlaced();
+  }
+
+  function makeDraggable(el){
+    let startX=0, startY=0, origLeft=0, origTop=0, dragging=false;
+
+    const getPos = () => {
+      const idx = Number(el.dataset.idx);
+      const p = state.placed[idx];
+      return { idx, p };
+    };
+
+    function onDown(ev){
+      ev.preventDefault();
+      const pt = ev.touches ? ev.touches[0] : ev;
+      dragging=true;
+      startX = pt.clientX;
+      startY = pt.clientY;
+      const {idx, p} = getPos();
+      if(!p) return;
+      origLeft = p.x;
+      origTop  = p.y;
+      el.setPointerCapture?.(ev.pointerId || 1);
+    }
+    function onMove(ev){
+      if(!dragging) return;
+      const pt = ev.touches ? ev.touches[0] : ev;
+      const stage = $("stage");
+      const rect = stage.getBoundingClientRect();
+      const dx = (pt.clientX - startX)/rect.width;
+      const dy = (pt.clientY - startY)/rect.height;
+      const {idx, p} = getPos();
+      if(!p) return;
+      p.x = clamp(origLeft + dx, 0, 1);
+      p.y = clamp(origTop + dy, 0, 1);
+      el.style.left = (p.x*100) + "%";
+      el.style.top  = (p.y*100) + "%";
+    }
+    function onUp(){
+      if(!dragging) return;
+      dragging=false;
+      save();
+    }
+
+    el.addEventListener("pointerdown", onDown);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+
+    // iOS fallback
+    el.addEventListener("touchstart", onDown, {passive:false});
+    window.addEventListener("touchmove", onMove, {passive:false});
+    window.addEventListener("touchend", onUp);
+  }
+
+  function renderDollhouseUI(){
+    updateCoinDisplays();
+    renderShop();
+    renderOwned();
+    renderPlaced();
+  }
+
+  // --- parent mode (simple pin hash) ---
+  function simpleHash(s){
+    let h=0;
+    for(let i=0;i<s.length;i++) h = ((h<<5)-h) + s.charCodeAt(i), h|=0;
+    return String(h);
+  }
+  function openParent(){
+    const hasPin = !!(state.parent.pinHash);
+    if(!hasPin){
+      // no pin set yet -> allow opening once
+      state.parent.unlocked = true;
+      $("adminPanel").style.display="block";
+      return;
+    }
+    const p = prompt("Enter Parent PIN:");
+    if(p===null) return;
+    if(simpleHash(String(p)) === state.parent.pinHash){
+      state.parent.unlocked = true;
+      $("adminPanel").style.display="block";
+    } else {
+      showToast("Wrong PIN");
+    }
+  }
+  function closeParent(){
+    $("adminPanel").style.display="none";
+    state.parent.unlocked = false;
+  }
+  function savePin(){
+    if(!state.parent.unlocked) return;
+    const p = String($("adminPin").value||"").trim();
+    if(p.length < 4){ showToast("PIN must be 4+ digits"); return; }
+    state.parent.pinHash = simpleHash(p);
+    $("adminPin").value = "";
+    save();
+    showToast("PIN saved ✅");
+  }
+  function saveCoins(){
+    if(!state.parent.unlocked) return;
+    const c = Math.max(0, Number($("adminCoins").value||0));
+    state.coins = Math.floor(c);
+    save();
+    render();
+    showToast("Saved ✅");
+  }
+  function unlockAll(){
+    if(!state.parent.unlocked) return;
+    CATALOG.forEach(i=> state.owned[i.id] = true);
+    save();
+    renderDollhouseUI();
+    showToast("Unlocked ✅");
+  }
+  function clearHouse(){
+    if(!state.parent.unlocked) return;
+    if(!confirm("Clear all placed friends?")) return;
+    state.placed = [];
+    save(); renderPlaced();
+    showToast("Cleared");
+  }
+
+  // --- overlay open/close (FIX: ensure IDs wired correctly) ---
+  function openDollhouse(){
+    $("dollOverlay").style.display = "block";
+    renderDollhouseUI();
+    selectedFriendId = null;
+    renderOwned();
+  }
+  function closeDollhouse(){ $("dollOverlay").style.display = "none"; }
+
+  // --- global render ---
+  function render(){
+    updatePills();
+    updateTimerUI();
+    renderList();
+    updateCoinDisplays();
+    if($("dollOverlay").style.display === "block") renderDollhouseUI();
+  }
+
+  // --- wire events ---
+  $("addBtn").addEventListener("click", ()=>{
+    const name = String($("newName").value||"").trim();
+    const minutes = clamp(Number($("newMinutes").value||0), 1, 90);
+    const reps = clamp(Number($("newReps").value||10), 1, 30);
+    if(!name){ showToast("Enter a name"); return; }
+    const it = { id: uid(), name, minutes, reps, done:false };
+    state.items.push(it);
+    $("newName").value=""; $("newMinutes").value=""; $("newReps").value="";
+    if(!state.timer.itemId) {
+      state.timer.itemId = it.id;
+      state.timer.totalSec = minutes*60;
+      state.timer.remainingSec = state.timer.totalSec;
+    }
+    save(); render();
   });
 
-  $("resetTodayBtn").addEventListener("click", resetToday);
-  $("wipeAllBtn").addEventListener("click", wipeAll);
+  $("resetTodayBtn").addEventListener("click", ()=>{
+    if(!confirm("Reset today's progress?")) return;
+    state.items.forEach(it=>it.done=false);
+    state.reps={};
+    state.doneMinutes = 0;
+    save(); render();
+  });
+  $("wipeAllBtn").addEventListener("click", ()=>{
+    if(!confirm("Wipe everything? This clears the practice list.")) return;
+    state.items=[]; state.reps={};
+    state.doneMinutes=0;
+    state.timer={ itemId:null, remainingSec:0, totalSec:0, running:false, interval:null };
+    save(); render();
+  });
 
-  
-  function resetCurrentItem(){
-    const it = currentItem();
-    if(!it){ showToast("Nothing to reset"); return; }
-    if(!confirm("Restart timer and practices for this item?")) return;
+  $("startBtn").addEventListener("click", startTimer);
+  $("pauseBtn").addEventListener("click", pauseTimer);
+  $("nextBtn").addEventListener("click", nextItem);
+  $("resetItemBtn").addEventListener("click", resetThisItem);
 
-    // reset timer
-    state.timer.remainingSec = state.timer.totalSec;
-    pauseTimer();
+  $("fullBtn").addEventListener("click", openFullScreen);
+  $("fsExitBtn").addEventListener("click", closeFullScreen);
+  $("fsStart").addEventListener("click", startTimer);
+  $("fsPause").addEventListener("click", pauseTimer);
+  $("fsNext").addEventListener("click", nextItem);
+  $("fsReset").addEventListener("click", resetThisItem);
+  $("fsTick").addEventListener("click", tickDone);
 
-    // reset practices
-    state.reps[it.id] = Array.from({length: Number(it.reps||1)}, ()=> false);
-
-    // untick item if needed
-    if(it.done){
-      it.done = false;
-      state.doneMinutes = Math.max(0, state.doneMinutes - Number(it.minutes||0));
-    }
+  $("metroToggle").addEventListener("click", toggleMetronome);
+  $("fsMetroToggle").addEventListener("click", toggleMetronome);
+  $("bpmRange").addEventListener("input", (e)=>{
+    const v = clamp(Number(e.target.value),40,200);
+    state.metroBpm = v; metro.bpm = v;
+    $("bpmVal").textContent=v; $("fsBpmVal").textContent=v;
+    $("fsBpmRange").value=v;
     save();
-    updateTimerUI();
-    render();
-    showToast("Item reset 💗");
-  }
+  });
+  $("fsBpmRange").addEventListener("input", (e)=>{
+    const v = clamp(Number(e.target.value),40,200);
+    state.metroBpm = v; metro.bpm = v;
+    $("fsBpmVal").textContent=v; $("bpmVal").textContent=v;
+    $("bpmRange").value=v;
+    save();
+  });
 
-  document.getElementById("resetItemBtn")?.addEventListener("click", resetCurrentItem);
-  document.getElementById("fsReset")?.addEventListener("click", resetCurrentItem);
+  // Dollhouse open/close (button placement matches Lincoln: header pillrow first button)
+  $("openDollBtn").addEventListener("click", openDollhouse);
+  $("closeDollBtn").addEventListener("click", closeDollhouse);
 
+  // Parent mode inside dollhouse overlay (same location as Lincoln: top-right of overlay)
+  $("parentBtn").addEventListener("click", openParent);
+  $("closeParentBtn").addEventListener("click", closeParent);
+  $("savePinBtn").addEventListener("click", savePin);
+  $("saveCoinsBtn").addEventListener("click", saveCoins);
+  $("unlockAllBtn").addEventListener("click", unlockAll);
+  $("clearHouseBtn").addEventListener("click", clearHouse);
+
+  // stage click to place
+  $("stage").addEventListener("click", (e)=> {
+    // don't place if clicking an existing sticker
+    if(e.target.closest(".sticker")) return;
+    placeSelectedAt(e.clientX, e.clientY);
+  });
+
+  // init
   load();
+  ensureToday();
+  bindMetronomeControls();
+  updateMetroButtons();
+  if(!state.timer.itemId && state.items[0]) {
+    state.timer.itemId = state.items[0].id;
+    state.timer.totalSec = Number(state.items[0].minutes||0)*60;
+    state.timer.remainingSec = state.timer.totalSec;
+  }
+  render();
 });
 </script>
 </body>
