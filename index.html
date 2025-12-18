@@ -232,10 +232,10 @@
     #dollOverlay .fsWrap{
       position:relative;
       background-image: url('assets/dollhouse.webp');
-      background-size: cover;
+      background-size: contain;
       background-position: center;
-      border-radius: 18px;
-      border:1px solid rgba(190,24,93,.18);
+      border-radius:0px;
+      border:none;
       overflow:hidden;
     }
     #dollOverlay .fsWrap::before{
@@ -268,7 +268,7 @@
     .stickersLayer{position:absolute; inset:0;}
     .sticker{
       position:absolute;
-      width:90px; height:90px;
+      width:270px; height:270px;
       border-radius:16px;
       cursor:grab;
       user-select:none;
@@ -308,7 +308,93 @@
       background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.90));
       backdrop-filter: blur(6px);
     }
-  </style>
+  
+/* --- Kiosk / edge-to-edge overlays (iPad landscape friendly) --- */
+.fsOverlay{
+  padding:0 !important;
+}
+.fsWrap{
+  max-width:none !important;
+  margin:0 !important;
+  width:100% !important;
+  height:100% !important;
+  padding: calc(env(safe-area-inset-top) + 14px) calc(env(safe-area-inset-right) + 14px)
+           calc(env(safe-area-inset-bottom) + 14px) calc(env(safe-area-inset-left) + 14px) !important;
+}
+
+/* Ensure Full Screen practice circles always have room */
+#circleRowBig{
+  min-height:90px;
+  padding:12px;
+}
+
+/* Dollhouse kiosk stage full-bleed */
+#dollOverlay .fsWrap{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:12px !important;
+}
+#dollOverlay .dollMain{
+  flex:1 1 auto !important;
+  position:relative !important;
+  display:block !important;
+  margin-top:0 !important;
+  min-height:0 !important;
+}
+
+/* Stage becomes full-bleed canvas behind UI */
+#dollOverlay .stage{
+  position:absolute !important;
+  inset:0 !important;
+  height:auto !important;
+  border-radius:0 !important;
+  border:none !important;
+}
+
+/* Drawer (collapsible shop) */
+#dollOverlay .palette{
+  position:absolute !important;
+  top:0 !important;
+  right:0 !important;
+  height:100% !important;
+  width:360px !important;
+  max-width:86vw !important;
+  overflow:auto !important;
+  background:rgba(255,255,255,.92) !important;
+  border-left:1px solid rgba(190,24,93,.18) !important;
+  box-shadow: -12px 0 28px rgba(91,26,58,.12) !important;
+  transform: translateX(100%);
+  transition: transform .18s ease;
+  z-index:60 !important;
+  padding:12px !important;
+  backdrop-filter: blur(10px);
+}
+#dollOverlay.drawerOpen .palette{ transform: translateX(0); }
+
+/* When drawer open, keep dollhouse visible by shrinking stage */
+#dollOverlay.drawerOpen .stage{
+  right:360px !important;
+}
+@media (max-width: 720px){
+  #dollOverlay.drawerOpen .stage{ right:0 !important; } /* on small screens overlay is OK */
+}
+
+/* Drawer toggle tab */
+#drawerToggle{
+  position:absolute;
+  top:120px;
+  right:0;
+  z-index:70;
+  border-radius:18px 0 0 18px;
+  padding:12px 14px;
+  font-weight:900;
+  border:1px solid rgba(190,24,93,.18);
+  background:rgba(255,255,255,.86);
+  box-shadow:0 10px 24px rgba(91,26,58,.12);
+}
+#drawerToggle:active{ transform:translateY(1px); }
+
+</style>
 </head>
 <body>
   <header>
@@ -410,6 +496,11 @@
         <div class="progress" style="height:18px;"><div class="bar" id="fsBar"></div></div>
       </div>
 
+      <div>
+        <div class="smallnote" style="text-align:center; font-weight:800;">Tap one circle after each practice 🎀</div>
+        <div class="circleRow" id="circleRowBig"></div>
+      </div>
+
       <div class="card" style="background:rgba(255,255,255,.82); border:1px solid rgba(190,24,93,.12); border-radius:18px; padding:12px;">
         <div class="row" style="justify-content:space-between; align-items:center;">
           <div style="font-weight:950;">Metronome</div>
@@ -472,6 +563,7 @@
       </div>
 
       <div class="dollMain">
+        <button class="btn" id="drawerToggle">🛍️ Shop</button>
         <div class="stage" id="stage">
           <div class="stickersLayer" id="stickersLayer"></div>
           <div class="stageHint">Tap a friend → tap in the house to place. Drag to move. Double‑click to remove.</div>
@@ -506,7 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const KEY = "evelyn_violin_practice_v9";
   const TODAY_KEY = () => new Date().toISOString().slice(0,10);
 
-  const CATALOG = [{"id": "hello_kitty", "name": "Hello Kitty", "cost": 300, "img": "assets/hello_kitty.webp"}, {"id": "my_melody", "name": "My Melody", "cost": 280, "img": "assets/my_melody.webp"}, {"id": "kuromi", "name": "Kuromi", "cost": 320, "img": "assets/kuromi.webp"}, {"id": "cinnamoroll", "name": "Cinnamoroll", "cost": 310, "img": "assets/cinnamoroll.webp"}, {"id": "pompompurin", "name": "Pompompurin", "cost": 260, "img": "assets/pompompurin.webp"}, {"id": "keroppi", "name": "Keroppi", "cost": 240, "img": "assets/keroppi.webp"}, {"id": "pochacco", "name": "Pochacco", "cost": 250, "img": "assets/pochacco.webp"}, {"id": "bubbles", "name": "Bubble Friend", "cost": 200, "img": "assets/bathtub_friend.webp"}];
+  const CATALOG = [{"id": "mymelody_lookdown", "name": "My Melody", "cost": 220, "img": "assets/mymelody_lookdown.webp"}, {"id": "cinnamoroll", "name": "Cinnamoroll", "cost": 260, "img": "assets/cinnamoroll.webp"}, {"id": "kuromi", "name": "Kuromi", "cost": 280, "img": "assets/kuromi.webp"}, {"id": "mymelody", "name": "My Melody", "cost": 240, "img": "assets/mymelody.webp"}, {"id": "pochacco", "name": "Pochacco", "cost": 240, "img": "assets/pochacco.webp"}, {"id": "pompompurin", "name": "Pompompurin", "cost": 260, "img": "assets/pompompurin.webp"}, {"id": "kiki", "name": "Kiki (Little Twin Stars)", "cost": 260, "img": "assets/kiki.webp"}, {"id": "hellokitty", "name": "Hello Kitty", "cost": 300, "img": "assets/hellokitty.webp"}, {"id": "keroppi", "name": "Keroppi", "cost": 240, "img": "assets/keroppi.webp"}, {"id": "badtzmaru", "name": "Badtz-Maru", "cost": 260, "img": "assets/badtzmaru.webp"}];
 
   let state = {
     items: [],
@@ -590,10 +682,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderCircles(){
     const it = currentItem();
     const small = $("circleRowSmall");
-    if(!small) return;
-    small.innerHTML = "";
+    const big = $("circleRowBig");
+    if(small) small.innerHTML = "";
+    if(big) big.innerHTML = "";
     if(!it){
-      small.innerHTML = `<div class="smallnote">Pick an item to see practices 💗</div>`;
+      const msg = `<div class="smallnote">Pick an item to see practices 💗</div>`;
+      if(small) small.innerHTML = msg;
+      if(big) big.innerHTML = msg;
       return;
     }
     ensureRepsState(it);
@@ -601,7 +696,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextIndex = a.findIndex(x=>!x);
 
     const makeCircle = (i) => {
-      const c = document.createElement("div");
+const c = document.createElement("div");
       c.className = "circle";
       c.textContent = String(i+1);
       if(a[i]) c.classList.add("done");
@@ -631,7 +726,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return c;
     };
 
-    a.forEach((_,i)=> small.appendChild(makeCircle(i)));
+    a.forEach((_,i)=>{ if(small) small.appendChild(makeCircle(i)); if(big) big.appendChild(makeCircle(i)); });
   }
 
   function celebrate(){
@@ -819,7 +914,7 @@ document.addEventListener("DOMContentLoaded", () => {
     render();
   }
 
-  function openFullScreen(){ $("fsOverlay").style.display="block"; bindMetronomeControls(); updateTimerUI(); }
+  function openFullScreen(){ $("fsOverlay").style.display="block"; bindMetronomeControls(); renderCircles(); updateTimerUI(); }
   function closeFullScreen(){ $("fsOverlay").style.display="none"; }
 
   // --- reorder drag ---
@@ -1157,6 +1252,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- overlay open/close (FIX: ensure IDs wired correctly) ---
   function openDollhouse(){
     $("dollOverlay").style.display = "block";
+    $("dollOverlay").classList.remove("drawerOpen");
+    if($("drawerToggle")) $("drawerToggle").textContent = "🛍️ Shop";
     renderDollhouseUI();
     selectedFriendId = null;
     renderOwned();
@@ -1238,7 +1335,25 @@ document.addEventListener("DOMContentLoaded", () => {
   $("openDollBtn").addEventListener("click", openDollhouse);
   $("closeDollBtn").addEventListener("click", closeDollhouse);
 
-  // Parent mode inside dollhouse overlay (same location as Lincoln: top-right of overlay)
+  
+  // Collapsible shop drawer (kiosk friendly)
+  const dollOverlay = $("dollOverlay");
+  const drawerToggle = $("drawerToggle");
+  function setDrawer(open){
+    if(!dollOverlay) return;
+    dollOverlay.classList.toggle("drawerOpen", !!open);
+    if(drawerToggle) drawerToggle.textContent = open ? "✖ Close" : "🛍️ Shop";
+  }
+  if(drawerToggle){
+    drawerToggle.addEventListener("click", ()=> {
+      const open = dollOverlay && dollOverlay.classList.contains("drawerOpen");
+      setDrawer(!open);
+    });
+  }
+  // Start with drawer closed so it doesn't obstruct the dollhouse
+  setDrawer(false);
+
+// Parent mode inside dollhouse overlay (same location as Lincoln: top-right of overlay)
   $("parentBtn").addEventListener("click", openParent);
   $("closeParentBtn").addEventListener("click", closeParent);
   $("savePinBtn").addEventListener("click", savePin);
